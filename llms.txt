@@ -1,0 +1,32 @@
+# LiquiLens
+
+> LiquiLens is an autonomous treasury and liquidity platform for Indian businesses and lenders. It forecasts cash, prices liquidity, scores credit, and routes idle balances through regulated rails, so a business earns on every rupee overnight and a lender sees liquidity stress before it becomes a default.
+
+## What it does
+
+- Multi horizon cash and liquidity forecasting for businesses and lenders
+- Liquidity at Risk: Monte Carlo simulation of cash shortfalls over a rolling horizon
+- Liquidity Credit Score: an LCR and NSFR driven score of buffer adequacy, funding stability and concentration
+- Contagion Radar: predicts which counterparties will delay payment before it lands
+- Liquidity Mesh: matches surplus cash to deficits and prices it inside the bank spread
+- Early Warning: lender facing drift and breach detection aligned with RBI expectations on early warning systems and expected credit loss
+
+## Who it is for
+
+- Indian NBFCs and banks that need liquidity risk monitoring, credit scoring, and early warning on a live book
+- Indian MSMEs and mid size businesses whose working capital sits in current accounts earning zero (RBI directions prohibit interest on current account balances)
+
+## Why it matters (sourced)
+
+- India's MSME credit gap was estimated at about Rs 25 lakh crore as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025)
+- MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME via PIB, July 2024)
+- Bank credit outstanding to MSMEs stood at Rs 27.25 lakh crore as of March 2024 (RBI Deputy Governor Swaminathan J, November 2024)
+- Under the RBI Liquidity Risk Management Framework for NBFCs (4 November 2019), LCR obligations attach to non deposit taking NBFCs as assets cross Rs 5,000 crore, requiring sufficient High Quality Liquid Assets to survive a 30 day acute liquidity stress scenario
+
+## Status
+
+Working product, currently in private pilots. Design partners and early access: contact the founder via https://liquilens.in/ or LinkedIn (https://www.linkedin.com/in/mrinal-m-2280343b5/).
+
+## Pages
+
+- [Home](https://liquilens.in/): product overview, the six engines, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs

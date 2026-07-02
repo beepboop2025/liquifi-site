@@ -38,7 +38,13 @@
       "url": "https://liquilens.in/",
       "logo": "https://liquilens.in/og.png",
       "description": "An autonomous treasury and liquidity layer for Indian businesses and lenders.",
-      "areaServed": "IN"
+      "areaServed": "IN",
+      "founder": {
+        "@type": "Person",
+        "name": "Mrinal",
+        "jobTitle": "Founder",
+        "sameAs": "https://www.linkedin.com/in/mrinal-m-2280343b5/"
+      }
     },
     {
       "@type": "WebSite",
@@ -47,6 +53,15 @@
       "name": "LiquiLens",
       "publisher": { "@id": "https://liquilens.in/#org" },
       "inLanguage": "en-IN"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://liquilens.in/#page",
+      "url": "https://liquilens.in/",
+      "isPartOf": { "@id": "https://liquilens.in/#site" },
+      "about": { "@id": "https://liquilens.in/#org" },
+      "datePublished": "2026-07-02",
+      "dateModified": "2026-07-03"
     }
   ]
 }
@@ -175,6 +190,24 @@
   .engine p{font-size:14.5px;color:var(--muted);line-height:1.55}
   .engines-note{font-family:var(--mono);font-size:13px;color:var(--muted-2);margin-top:20px;letter-spacing:.02em}
 
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:46px}
+  .stat{background:var(--ink-2);padding:26px 24px;transition:.2s}
+  .stat:hover{background:var(--ink-3)}
+  .stat .num{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,34px);color:var(--gold);letter-spacing:-.01em;line-height:1.1}
+  .stat p{font-size:14px;color:var(--muted);line-height:1.55;margin-top:10px}
+  .stat .src{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:14px;letter-spacing:.03em;line-height:1.6}
+  .stat .src a{color:var(--muted-2);border-bottom:1px dotted var(--line-2);transition:.2s}
+  .stat .src a:hover{color:var(--gold);border-color:var(--gold)}
+  .stats-note{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:52em}
+
+  /* regulator quote */
+  .reg-quote{margin-top:36px;max-width:44em;border-left:2px solid var(--gold-deep);padding:8px 0 8px 24px}
+  .reg-quote p{font-family:var(--serif);font-style:italic;font-size:19.5px;color:var(--text);line-height:1.55}
+  .reg-quote cite{display:block;font-family:var(--mono);font-style:normal;font-size:12.5px;color:var(--muted-2);margin-top:14px;letter-spacing:.03em}
+  .reg-quote cite a{color:var(--muted);border-bottom:1px dotted var(--line-2);transition:.2s}
+  .reg-quote cite a:hover{color:var(--gold);border-color:var(--gold)}
+
   /* who */
   .who{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px}
   .card{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:32px 30px}
@@ -206,6 +239,7 @@
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;gap:40px}
     .engines,.who{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
     .founder{grid-template-columns:1fr;gap:18px}
     .band{padding:68px 0}
     nav .nav-cta{display:none}
@@ -289,12 +323,43 @@
   </div>
 </section>
 
+<!-- the numbers -->
+<section class="band" id="numbers">
+  <div class="wrap">
+    <span class="eyebrow reveal">The numbers</span>
+    <h2 class="reveal">Measured, <em>not asserted.</em></h2>
+    <div class="stats reveal">
+      <div class="stat">
+        <div class="num">₹25 lakh crore</div>
+        <p>India's MSME credit gap, the shortfall between credit demanded and credit supplied by formal lenders, as of March 2025.</p>
+        <span class="src">Deloitte analysis, 2025 · <a href="https://www.policycircle.org/policy/india-msmes-funding-gap" target="_blank" rel="noopener">Standing Committee on Finance put it at ₹20 to 25 lakh crore</a></span>
+      </div>
+      <div class="stat">
+        <div class="num">14%</div>
+        <p>Share of Indian MSMEs with access to formal, institutional credit. The rest borrow informally or not at all.</p>
+        <span class="src">Deloitte, 2025</span>
+      </div>
+      <div class="stat">
+        <div class="num">~30% of GDP</div>
+        <p>What MSMEs contribute to India's economy, along with roughly 45% of exports, across more than 6 crore registered enterprises.</p>
+        <span class="src"><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2035073" target="_blank" rel="noopener">Ministry of MSME, via PIB, July 2024</a></span>
+      </div>
+      <div class="stat">
+        <div class="num">₹27.25 lakh crore</div>
+        <p>Bank credit outstanding to MSMEs as of March 2024, growing over 12% a year. The book is large, and it is getting larger faster than the tools that watch it.</p>
+        <span class="src"><a href="https://www.bis.org/review/r241126v.htm" target="_blank" rel="noopener">RBI Deputy Governor Swaminathan J, November 2024</a></span>
+      </div>
+    </div>
+    <p class="stats-note reveal">And the rupee that is already in the bank earns nothing while it waits: RBI's Master Direction on Interest Rate on Deposits prohibits banks from paying interest on current account balances. That is the idle side of the same gap.</p>
+  </div>
+</section>
+
 <!-- what it is -->
 <section class="band">
   <div class="wrap">
     <span class="eyebrow reveal">What LiquiLens is</span>
     <h2 class="reveal">An autonomous treasury and liquidity layer, built for how lending and cash actually move <em>in India.</em></h2>
-    <p class="body reveal">LiquiLens forecasts cash, prices liquidity, scores credit, and routes idle balances through regulated rails, so a business earns on every rupee overnight and a lender sees a default before it lands. Calibrated to Indian money-market data, not retrofitted from a Western playbook.</p>
+    <p class="body reveal"><b>LiquiLens is an autonomous treasury and liquidity platform for Indian businesses and lenders.</b> It forecasts cash, prices liquidity, scores credit, and routes idle balances through regulated rails, so a business earns on every rupee overnight and a lender sees a default before it lands. Calibrated to Indian money market data, not retrofitted from a Western playbook.</p>
   </div>
 </section>
 
@@ -311,7 +376,7 @@
       <div class="engine"><div class="no">05</div><h3>Liquidity Mesh</h3><p>Matches surplus to deficit and prices it inside the bank spread, so both sides keep what the spread used to take.</p></div>
       <div class="engine"><div class="no">06</div><h3>Early Warning</h3><p>Lender facing drift and breach detection, the monitoring a risk committee actually asks for.</p></div>
     </div>
-    <p class="engines-note reveal">Research grounded · India calibrated · built to survive a real risk review.</p>
+    <p class="engines-note reveal">Research grounded · India calibrated · built to survive a real risk review.<br>The regulatory frame the engines compute against: <a href="https://www.bis.org/publ/bcbs238.htm" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Basel III LCR standard (BIS, 2013)</a> · <a href="https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=11719&amp;Mode=0" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">RBI liquidity risk framework for NBFCs (2019)</a> · RBI Scale Based Regulation (2021).</p>
   </div>
 </section>
 
@@ -340,6 +405,10 @@
     <span class="eyebrow reveal">Try a piece of it</span>
     <h2 class="reveal">When does the RBI's LCR clock <em>start for you?</em></h2>
     <p class="body reveal">Non deposit taking NBFCs cross into mandatory Liquidity Coverage Ratio at <b>₹5,000 crore of assets</b>. Once crossed, it stays. Most teams find out the quarter it lands. You can find out now.</p>
+    <blockquote class="reg-quote reveal">
+      <p>"…sufficient High Quality Liquid Assets to survive any acute liquidity stress scenario lasting for 30 days."</p>
+      <cite>What the buffer is for, in the regulator's own words. <a href="https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=11719&amp;Mode=0" target="_blank" rel="noopener">RBI, Liquidity Risk Management Framework for NBFCs and CICs, 4 November 2019</a></cite>
+    </blockquote>
     <div class="lcr-tool reveal">
       <div class="lcr-inputs">
         <label>Total assets today <span>₹ crore</span>
@@ -416,6 +485,10 @@
         <p>The RBI is extending Liquidity Coverage Ratio style rules deeper into the NBFC sector, with thresholds that start applying as balance sheets cross 5,000 crore rupees. The calculator on this page estimates the month your growth curve crosses that line. If you are a lender, that date is when liquidity risk stops being optional to measure.</p>
       </details>
       <details>
+        <summary>How big is the gap LiquiLens is built for?</summary>
+        <p>Large, and documented. India's MSME credit gap was estimated at about <b>₹25 lakh crore as of March 2025</b>, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). On the cash side, RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero by rule, not by accident.</p>
+      </details>
+      <details>
         <summary>Is LiquiLens live? How do I get access?</summary>
         <p>The platform is a working product built solo and from research up, currently in private pilots. If you run treasury at a business or risk at a lender and want early access, <b>email the founder or connect on LinkedIn below.</b> Design partners shape what gets built next.</p>
       </details>
@@ -430,7 +503,8 @@
     {"@type": "Question", "name": "What is LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens is an autonomous treasury and liquidity layer for Indian businesses and lenders. It puts idle cash balances to work in the money market and monitors live lending books for liquidity risk, using six engines grounded in published research."}},
     {"@type": "Question", "name": "Who is LiquiLens for?", "acceptedAnswer": {"@type": "Answer", "text": "Indian businesses sitting on idle cash, and lenders, NBFCs in particular, who need to see liquidity stress in their book early. Banks have had this machinery for decades; everyone else has spreadsheets."}},
     {"@type": "Question", "name": "Why does the money market matter for an ordinary business?", "acceptedAnswer": {"@type": "Answer", "text": "The money market is where banks and large corporates park cash overnight. It is the deepest, safest pool in Indian finance and has effectively been closed to smaller players. LiquiLens opens that access so a mid-size company's cash can work overnight the way a bank's does."}},
-    {"@type": "Question", "name": "What is the RBI LCR change?", "acceptedAnswer": {"@type": "Answer", "text": "The RBI is extending Liquidity Coverage Ratio style rules deeper into the NBFC sector, with thresholds applying as balance sheets cross 5,000 crore rupees. The LiquiLens calculator estimates the month a lender's growth curve crosses that line."}},
+    {"@type": "Question", "name": "What is the RBI LCR change?", "acceptedAnswer": {"@type": "Answer", "text": "Under the RBI's Liquidity Risk Management Framework for NBFCs (November 2019), Liquidity Coverage Ratio requirements apply to non deposit taking NBFCs as balance sheets cross 5,000 crore rupees, requiring sufficient High Quality Liquid Assets to survive a 30 day acute liquidity stress scenario. The LiquiLens calculator estimates the month a lender's growth curve crosses that line."}},
+    {"@type": "Question", "name": "How big is the gap LiquiLens is built for?", "acceptedAnswer": {"@type": "Answer", "text": "India's MSME credit gap was estimated at about 25 lakh crore rupees as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero."}},
     {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens is a working product currently in private pilots. Treasury and risk leaders can request early access by contacting the founder through liquilens.in."}}
   ]
 }
@@ -450,7 +524,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · The Liquidity Network</span>
+    <span>© 2026 LiquiLens · The Liquidity Network · Updated 3 July 2026</span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
 </footer>
