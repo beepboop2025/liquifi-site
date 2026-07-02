@@ -383,6 +383,59 @@
   </div>
 </section>
 
+<!-- faq -->
+<section class="band" id="faq">
+  <div class="wrap">
+    <span class="eyebrow reveal">Questions</span>
+    <h2 class="reveal">Plain answers.</h2>
+    <style>
+      .faq{margin-top:34px;max-width:46em}
+      .faq details{border-bottom:1px solid var(--line);padding:4px 0}
+      .faq summary{cursor:pointer;font-family:var(--serif);font-size:20px;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+      .faq summary::-webkit-details-marker{display:none}
+      .faq summary::after{content:"+";font-family:var(--mono);color:var(--gold);font-size:18px;flex-shrink:0}
+      .faq details[open] summary::after{content:"–"}
+      .faq details p{color:var(--muted);padding:0 0 18px;line-height:1.7;max-width:42em}
+      .faq details p b{color:var(--text);font-weight:500}
+    </style>
+    <div class="faq reveal">
+      <details>
+        <summary>What is LiquiLens?</summary>
+        <p>LiquiLens is an autonomous treasury and liquidity layer for Indian businesses and lenders. It watches the cash a business already holds, puts idle balances to work in the money market, the safest and most liquid corner of finance, and monitors a live lending book for liquidity risk. <b>Six engines, each grounded in published research, do the watching.</b></p>
+      </details>
+      <details>
+        <summary>Who is it for?</summary>
+        <p>Two groups. Indian businesses sitting on idle cash that earns nothing overnight, and lenders, NBFCs in particular, who need to see liquidity stress in their book before it becomes a headline. Banks have had this machinery for decades. Everyone else has spreadsheets.</p>
+      </details>
+      <details>
+        <summary>Why does the money market matter for an ordinary business?</summary>
+        <p>The money market is where banks and large corporates park cash overnight and borrow short term. It is the deepest, safest pool in Indian finance, and it has effectively been closed to everyone below a certain size. LiquiLens exists to open that access, so a mid-size company's cash can work through the night the way a bank's does.</p>
+      </details>
+      <details>
+        <summary>What is the RBI LCR change and why is there a countdown on this page?</summary>
+        <p>The RBI is extending Liquidity Coverage Ratio style rules deeper into the NBFC sector, with thresholds that start applying as balance sheets cross 5,000 crore rupees. The calculator on this page estimates the month your growth curve crosses that line. If you are a lender, that date is when liquidity risk stops being optional to measure.</p>
+      </details>
+      <details>
+        <summary>Is LiquiLens live? How do I get access?</summary>
+        <p>The platform is a working product built solo and from research up, currently in private pilots. If you run treasury at a business or risk at a lender and want early access, <b>email the founder or connect on LinkedIn below.</b> Design partners shape what gets built next.</p>
+      </details>
+    </div>
+  </div>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens is an autonomous treasury and liquidity layer for Indian businesses and lenders. It puts idle cash balances to work in the money market and monitors live lending books for liquidity risk, using six engines grounded in published research."}},
+    {"@type": "Question", "name": "Who is LiquiLens for?", "acceptedAnswer": {"@type": "Answer", "text": "Indian businesses sitting on idle cash, and lenders, NBFCs in particular, who need to see liquidity stress in their book early. Banks have had this machinery for decades; everyone else has spreadsheets."}},
+    {"@type": "Question", "name": "Why does the money market matter for an ordinary business?", "acceptedAnswer": {"@type": "Answer", "text": "The money market is where banks and large corporates park cash overnight. It is the deepest, safest pool in Indian finance and has effectively been closed to smaller players. LiquiLens opens that access so a mid-size company's cash can work overnight the way a bank's does."}},
+    {"@type": "Question", "name": "What is the RBI LCR change?", "acceptedAnswer": {"@type": "Answer", "text": "The RBI is extending Liquidity Coverage Ratio style rules deeper into the NBFC sector, with thresholds applying as balance sheets cross 5,000 crore rupees. The LiquiLens calculator estimates the month a lender's growth curve crosses that line."}},
+    {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens is a working product currently in private pilots. Treasury and risk leaders can request early access by contacting the founder through liquilens.in."}}
+  ]
+}
+</script>
+
 <!-- close -->
 <section class="close" id="contact">
   <div class="wrap">
