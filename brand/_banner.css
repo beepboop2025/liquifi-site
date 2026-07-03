@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0A0F1C;--ink2:#0E1424;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1584px;height:396px;background:var(--ink);overflow:hidden;position:relative;font-family:'Inter',system-ui,sans-serif}
+.glow{position:absolute;inset:0;background:radial-gradient(90% 120% at 78% 0%,rgba(227,183,120,.08),transparent 60%)}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;color:var(--text);letter-spacing:-0.02em;line-height:1.06}
+.serif em{font-style:italic;color:var(--gold);font-weight:400}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.url{position:absolute;right:56px;bottom:34px;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.08em;color:var(--muted2)}
+.url b{color:var(--gold);font-weight:500}
+/* small brand chip top-right */
+.chip{position:absolute;left:56px;top:36px;display:flex;align-items:center;gap:14px}
+.chip .m{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(150deg,var(--gold),var(--gold-deep))}
+.chip .m span{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:20px;color:#1A1206}
+.chip .n{font-weight:600;font-size:22px;color:var(--text);letter-spacing:-0.01em}
+/* ticker */
+.ticker{position:absolute;left:0;right:0;bottom:0;border-top:1px solid var(--line);background:linear-gradient(180deg,#0C1322,#0A0F1C);padding:14px 0;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:.04em;color:var(--muted)}
+.ticker span{padding:0 30px}.ticker b{color:var(--teal);font-weight:500}.ticker .tag{color:var(--gold)}
