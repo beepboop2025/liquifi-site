@@ -9,7 +9,7 @@
 - Liquidity Credit Score: an LCR and NSFR driven score of buffer adequacy, funding stability and concentration
 - Contagion Radar: predicts which counterparties will delay payment before it lands
 - Liquidity Mesh: matches surplus cash to deficits and prices it inside the bank spread
-- Early Warning: lender facing drift and breach detection aligned with RBI expectations on early warning systems and expected credit loss
+- Early Warning: a five signal lender suite (CE trajectory, network contagion, loan stacking velocity, coordinated fraud rings, single party concentration) under one false alert budget, aligned with RBI expectations on early warning systems and expected credit loss
 
 ## Who it is for
 
@@ -23,9 +23,15 @@
 - Bank credit outstanding to MSMEs stood at Rs 27.25 lakh crore as of March 2024 (RBI Deputy Governor Swaminathan J, November 2024)
 - Under the RBI Liquidity Risk Management Framework for NBFCs (4 November 2019), LCR obligations attach to non deposit taking NBFCs as assets cross Rs 5,000 crore, requiring sufficient High Quality Liquid Assets to survive a 30 day acute liquidity stress scenario
 
+## Proof on the public record
+
+- The early warning method was replayed on the 2018 to 2021 Indian NBFC and bank crisis using sourced public rating timelines: 7 of 8 defaults flagged early at a median of 6.5 months, DHFL at 8 months and Altico at 11 months before first missed payment, with rules frozen before scoring and pre stated predictions (including one designed to fail, which did)
+- Each of the five early warning signals shipped only after beating a pre registered bar on held out data; the validation scoreboard is inside the product model card
+- This is a case study on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
+
 ## Status
 
-Working product, currently in private pilots. Design partners and early access: contact the founder via https://liquilens.in/ or LinkedIn (https://www.linkedin.com/in/mrinal-m-2280343b5/).
+Live in production. Public walkthrough at https://demo.liquilens.in (synthetic data, no signup). Pilot tenants run isolated on the same infrastructure. Design partners and early access: contact the founder via https://liquilens.in/ or LinkedIn (https://www.linkedin.com/in/mrinal-m-2280343b5/).
 
 ## Pages
 
