@@ -77,6 +77,8 @@
         "Contagion Radar for counterparty payment delay",
         "Liquidity Mesh surplus-to-deficit matching",
         "RBI-aligned early warning and expected credit loss",
+        "Live MFI Risk Board scoring registered lenders on vetted public filings",
+        "Governed alert dispatch with a lender leave behind report",
         "Per-tenant regulatory reporting (CRR, SLR, ALM, LCR, NSFR)",
         "Hash-chained point-in-time ledger of every alert as published"
       ],
@@ -154,7 +156,10 @@
   }
   .ticker__track{display:inline-block;padding:11px 0;animation:scroll 38s linear infinite}
   .ticker:hover .ticker__track{animation-play-state:paused}
+  .ticker__track .half{display:inline-block;padding:0}
   .ticker__track span{padding:0 26px}
+  .ticker .live{color:var(--teal)}
+  .ticker .sei-print{color:var(--sei-bright)}
   .ticker .up{color:var(--teal)}
   .ticker .tag{color:var(--gold)}
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -332,6 +337,78 @@
   .sei-live__proof b{color:var(--muted);font-weight:500}
   .desk-note{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:52em}
 
+  /* ---------- the live board ---------- */
+  .board{margin-top:46px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .board__head{display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);flex-wrap:wrap}
+  .board__head .pulse{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2.4s ease-in-out infinite;flex-shrink:0}
+  .board__census{margin-left:auto;color:var(--muted);text-transform:none;letter-spacing:.03em}
+  .board__scroll{overflow-x:auto}
+  table.mfi{width:100%;border-collapse:collapse;min-width:660px}
+  .mfi th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-weight:400}
+  .mfi th:first-child,.mfi td:first-child{padding-left:22px}
+  .mfi th:last-child,.mfi td:last-child{padding-right:22px}
+  .mfi td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+  .mfi tbody tr{transition:background .18s}
+  .mfi tbody tr:hover{background:rgba(227,183,120,.04)}
+  .mfi tbody tr:last-child td{border-bottom:none}
+  .mfi .inst-name{color:var(--text);font-weight:500;white-space:nowrap}
+  .mfi .basis{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);white-space:nowrap}
+  .mfi .score{font-family:var(--mono);font-size:15px;color:var(--text);font-variant-numeric:tabular-nums;text-align:right}
+  .mfi .asof{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);white-space:nowrap}
+  .grade{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;padding:3px 9px;border-radius:999px;border:1px solid}
+  .grade.AAA{color:var(--teal);border-color:rgba(91,208,196,.45);background:rgba(91,208,196,.07)}
+  .grade.AA{color:var(--gold);border-color:rgba(227,183,120,.45);background:rgba(227,183,120,.07)}
+  .grade.other{color:var(--strain);border-color:rgba(217,146,116,.45);background:rgba(217,146,116,.07)}
+  .dbasis{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--erosion);border:1px solid rgba(211,171,110,.4);border-radius:999px;padding:2px 7px;margin-left:8px;vertical-align:1px}
+  .spark{display:block}
+  .spark path{stroke:var(--gold);stroke-width:1.6;fill:none;stroke-linecap:round}
+  .spark circle{fill:var(--gold)}
+  .board__fallback{padding:26px 22px;font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+  .tape{border-top:1px solid var(--line);padding:16px 22px}
+  .tape__title{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+  .tape a{display:block;font-family:var(--mono);font-size:12.5px;color:var(--muted);padding:7px 0;border-bottom:1px dashed var(--line);transition:.2s;line-height:1.5}
+  .tape a:last-child{border-bottom:none}
+  .tape a:hover{color:var(--gold)}
+  .tape a .d{color:var(--muted-2);padding-right:12px}
+
+  /* ---------- seiche live desk panel ---------- */
+  .sei-board{margin-top:24px;border:1px solid var(--sei-deep);border-radius:14px;background:#14162a;overflow:hidden}
+  .sei-board__head{display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--sei-deep);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);flex-wrap:wrap}
+  .sei-board__head .pulse{width:8px;height:8px;border-radius:50%;background:var(--sei);animation:pulse 2.4s ease-in-out infinite;flex-shrink:0}
+  .sei-board__stamp{margin-left:auto;text-transform:none;letter-spacing:.03em;color:var(--muted)}
+  .sei-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:1px;background:var(--sei-deep)}
+  .sei-cell{background:#14162a;padding:22px}
+  .sei-cell h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sei);font-weight:500}
+  .plumb{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:16px}
+  .plumb div{min-width:0}
+  .plumb .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  .plumb .v{display:block;font-family:var(--mono);font-size:16px;color:var(--text);margin-top:5px;font-variant-numeric:tabular-nums}
+  .plumb .a{display:block;font-family:var(--mono);font-size:9.5px;color:var(--muted-2);margin-top:4px}
+  .turn{display:flex;align-items:baseline;gap:14px;margin-top:16px;flex-wrap:wrap}
+  .turn .bp{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1;color:var(--sei-bright);font-variant-numeric:tabular-nums}
+  .turn .tband{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .sevdots{display:inline-flex;gap:5px;margin-left:2px;vertical-align:2px}
+  .sevdots i{width:7px;height:7px;border-radius:50%;background:var(--line-2)}
+  .sevdots i.on{background:var(--sei)}
+  .turn-note{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:14px;line-height:1.7}
+  .crunch{margin-top:16px}
+  .crunch li{list-style:none;display:grid;grid-template-columns:88px 1fr;gap:14px;padding:10px 0;border-bottom:1px dashed var(--sei-deep);font-size:13px}
+  .crunch li:last-child{border-bottom:none}
+  .crunch .cd{font-family:var(--mono);font-size:12px;color:var(--sei-bright);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .crunch .cr{color:var(--muted);line-height:1.55}
+  .sei-events{padding:22px;border-top:1px solid var(--sei-deep)}
+  .sei-events h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sei);font-weight:500}
+  .ev-line{position:relative;height:2px;background:var(--sei-deep);margin:34px 8px 6px;border-radius:2px}
+  .ev-dot{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:#14162a;border:2px solid var(--sei);transform:translate(-50%,-50%);cursor:default;transition:.2s}
+  .ev-dot.oos{border-color:var(--sei-bright);background:var(--sei-bright)}
+  .ev-dot:hover,.ev-dot:focus-visible{transform:translate(-50%,-50%) scale(1.45)}
+  .ev-dot .tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:10.5px;color:var(--text);background:var(--ink);border:1px solid var(--sei-deep);border-radius:7px;padding:6px 10px;opacity:0;pointer-events:none;transition:.2s;z-index:5}
+  .ev-dot:hover .tip,.ev-dot:focus-visible .tip{opacity:1}
+  .ev-dot.tip-left .tip{left:auto;right:-6px;transform:none}
+  .ev-dot.tip-right .tip{left:-6px;transform:none}
+  .ev-caption{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted-2);letter-spacing:.05em;margin:14px 8px 0}
+  .sei-fallback{padding:26px 22px;font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+
   /* founder */
   .founder{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:start;margin-top:40px}
   .founder .glyph{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(150deg,var(--ink-3),var(--ink-2));border:1px solid var(--line-2);font-family:var(--serif);font-style:italic;font-size:30px;color:var(--gold)}
@@ -361,10 +438,18 @@
     .band{padding:68px 0}
     nav .nav-cta{display:none}
     .leadrow{grid-template-columns:86px 1fr 64px;gap:10px}
+    .sei-grid{grid-template-columns:1fr}
+    .plumb{grid-template-columns:repeat(3,1fr)}
+    .board__census{margin-left:0;width:100%}
+    .sei-board__stamp{margin-left:0;width:100%}
+    .mfi th:nth-child(5),.mfi td:nth-child(5){display:none}
+    table.mfi{min-width:430px}
+    .mfi .inst-name{white-space:normal;font-size:13.5px}
   }
   @media (prefers-reduced-motion:reduce){
     .ticker__track{animation:none}
     .sei-live__head .pulse{animation:none}
+    .board__head .pulse,.sei-board__head .pulse{animation:none}
     .reveal{opacity:1;transform:none;transition:none}
     .leadrow .bar{transition:none}
     html{scroll-behavior:auto}
@@ -375,23 +460,8 @@
 
 <!-- overnight rates ticker : the money market never closes -->
 <div class="ticker" aria-hidden="true">
-  <div class="ticker__track">
-    <span>MIBOR O/N <b class="up">5.41%</b></span>
-    <span>TREPS <b class="up">5.38%</b></span>
-    <span>REPO <b class="up">5.25%</b></span>
-    <span>CBLO <b class="up">5.30%</b></span>
-    <span>91D T-BILL <b class="up">5.62%</b></span>
-    <span>CD 3M <b class="up">5.88%</b></span>
-    <span>CP 3M <b class="up">6.10%</b></span>
-    <span class="tag">the money market never sleeps</span>
-    <span>MIBOR O/N <b class="up">5.41%</b></span>
-    <span>TREPS <b class="up">5.38%</b></span>
-    <span>REPO <b class="up">5.25%</b></span>
-    <span>CBLO <b class="up">5.30%</b></span>
-    <span>91D T-BILL <b class="up">5.62%</b></span>
-    <span>CD 3M <b class="up">5.88%</b></span>
-    <span>CP 3M <b class="up">6.10%</b></span>
-    <span class="tag">the money market never sleeps</span>
+  <div class="ticker__track" id="tickerTrack">
+    <span class="half"><span>MIBOR O/N <b class="up">5.41%</b></span><span>TREPS <b class="up">5.38%</b></span><span>REPO <b class="up">5.25%</b></span><span>CBLO <b class="up">5.30%</b></span><span>91D T-BILL <b class="up">5.62%</b></span><span>CD 3M <b class="up">5.88%</b></span><span>CP 3M <b class="up">6.10%</b></span><span class="tag">the money market never sleeps</span></span><span class="half"><span>MIBOR O/N <b class="up">5.41%</b></span><span>TREPS <b class="up">5.38%</b></span><span>REPO <b class="up">5.25%</b></span><span>CBLO <b class="up">5.30%</b></span><span>91D T-BILL <b class="up">5.62%</b></span><span>CD 3M <b class="up">5.88%</b></span><span>CP 3M <b class="up">6.10%</b></span><span class="tag">the money market never sleeps</span></span>
   </div>
 </div>
 
@@ -402,6 +472,7 @@
       LiquiLens <small>the liquidity network</small>
     </a>
     <span class="nav-right">
+      <a class="nav-link" href="#board">The live board</a>
       <a class="nav-link" href="#desk"><span class="sei-dot"></span>Seiche, our open terminal</a>
       <a class="nav-link" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
       <a class="nav-cta" href="#contact">Start a conversation</a>
@@ -420,7 +491,7 @@
         <a class="btn btn-primary" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
         <a class="btn btn-ghost" href="#contact">Start a conversation</a>
       </div>
-      <p style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Live in production · five validated signals · 47 institutions replayed across two crisis cycles</p>
+      <p style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Live in production · five validated signals · 47 institutions replayed across two crisis cycles · a live risk board over the RBI registry</p>
     </div>
 
     <div class="terminal reveal">
@@ -590,6 +661,36 @@
   </div>
 </section>
 
+<!-- the live board : the product, running on this page -->
+<section class="band" id="board">
+  <div class="wrap">
+    <span class="eyebrow reveal">The live board</span>
+    <h2 class="reveal">This page does not describe the product. <em>It runs it.</em></h2>
+    <p class="body reveal">Below is the <b>MFI Risk Board</b> from the production system, fetched from the live API as this page loads. The same ensemble that replayed two crisis cycles, pointed at today: every registered NBFC MFI with a vetted dossier, scored on its latest public filing, with the score trajectory drawn quarter by quarter. <b>Coverage is stated, never implied.</b> A row falls off when its filings go stale instead of sitting there looking current.</p>
+
+    <div class="board reveal" id="mfiBoard">
+      <div class="board__head">
+        <span class="pulse"></span><span id="boardStamp">connecting to the production board…</span>
+        <span class="board__census" id="boardCensus"></span>
+      </div>
+      <div class="board__scroll" id="boardScroll" hidden>
+        <table class="mfi" id="mfiTable">
+          <thead>
+            <tr><th>Institution</th><th>Grade</th><th style="text-align:right">Score</th><th>Trajectory</th><th>Scored on</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="board__fallback" id="boardFallback">The board answers from the same servers that run the product. If nothing renders here, the honest reading is that the API did not answer from your network, and the full board is one click away in the <a href="https://demo.liquilens.in" target="_blank" rel="noopener" style="color:var(--gold)">live demo</a>.</div>
+      <div class="tape" id="rbiTape" hidden>
+        <div class="tape__title">The supervisory tape · enforcement actions from RBI press releases, collected by our own data plane</div>
+        <div id="tapeRows"></div>
+      </div>
+    </div>
+    <p class="stats-note reveal">Scores are disclosure based reads of public filings, not credit ratings, and every row names exactly which factors scored it. Institutions the ensemble cannot score honestly are excluded with the reason stated, not hidden. The full board, with dossier notes, sources and exclusions, is in the demo's Universe tab.</p>
+  </div>
+</section>
+
 <!-- who it is for -->
 <section class="band">
   <div class="wrap">
@@ -619,7 +720,7 @@
       <div class="engine"><div class="no">ISOLATION</div><h3>Every tenant sealed off</h3><p>Each lender's CRR, SLR, ALM and reporting book is scoped to that lender alone. Cross tenant isolation is proven by automated tests on every commit, and a probe for another tenant's report returns nothing, not even confirmation it exists.</p></div>
       <div class="engine"><div class="no">SECURITY</div><h3>Locked down by default</h3><p>Short lived tokens with rotation and role based access, account lockout, HTTPS enforced everywhere with HSTS, and dependency, container and secret scanning on every commit and every week. Production refuses to boot in an unsafe configuration.</p></div>
       <div class="engine"><div class="no">PROVENANCE</div><h3>Provable to a regulator</h3><p>A hash chained point in time ledger records every watchlist and alert as it was published. When a review asks what the engine said and when, the answer is cryptographic, not archaeological.</p></div>
-      <div class="engine"><div class="no">CONTINUITY</div><h3>Observable and recoverable</h3><p>Live metrics and error tracking in production, nightly database backups, more than 530 automated tests across the stack, and the option to run the whole platform on your own servers so your book never leaves your perimeter.</p></div>
+      <div class="engine"><div class="no">CONTINUITY</div><h3>Observable and recoverable</h3><p>Live metrics and error tracking in production, nightly database backups, more than 560 automated tests across the stack, and the option to run the whole platform on your own servers so your book never leaves your perimeter.</p></div>
     </div>
   </div>
 </section>
@@ -699,6 +800,40 @@
         </div>
       </div>
     </div>
+
+    <div class="sei-board reveal" id="seiBoard">
+      <div class="sei-board__head">
+        <span class="pulse"></span><span>The desk, live</span>
+        <span class="sei-board__stamp" id="seiBoardStamp">everything in this panel is fetched from api.seiche.info as you read</span>
+      </div>
+      <div id="seiBoardBody" hidden>
+        <div class="sei-grid">
+          <div class="sei-cell">
+            <h4>The plumbing, right now</h4>
+            <div class="plumb" id="seiPlumb"></div>
+            <p class="turn-note">The prints the desk actually watches: where overnight money clears, what the Fed pays, and how much cash the system is standing on.</p>
+            <h4 style="margin-top:24px">The next turn, called in advance</h4>
+            <div class="turn">
+              <span class="bp" id="turnBp">··</span>
+              <span class="tband" id="turnBand"></span>
+            </div>
+            <p class="turn-note" id="turnNote"></p>
+          </div>
+          <div class="sei-cell">
+            <h4>Crunch windows on the calendar</h4>
+            <ul class="crunch" id="seiCrunch"></ul>
+            <p class="turn-note">Dated pressure points where a large settlement or a calendar date lands while reserves sit below the estimated comfort level. Each carries its reason, so the reading can be checked, not just believed.</p>
+          </div>
+        </div>
+        <div class="sei-events">
+          <h4>The scoreboard events · funding shocks the record is judged against</h4>
+          <div class="ev-line" id="evLine"></div>
+          <div class="ev-caption"><span id="evStart"></span><span>hover a marker for the episode</span><span id="evEnd"></span></div>
+        </div>
+      </div>
+      <div class="sei-fallback" id="seiBoardFallback" hidden>The live board did not answer from your network. Nothing is shown rather than something stale. The terminal itself always carries its own as of stamp at <a href="https://seiche.info" target="_blank" rel="noopener" style="color:var(--sei-bright)">seiche.info</a>.</div>
+    </div>
+
     <p class="desk-note reveal">Why show you a second product we give away? Because an early warning vendor asking for trust should have a public track record you can audit without asking permission. Seiche is ours. Every number it has ever published is sealed and checkable, and the same discipline, point in time records, frozen rules, misses shown, is what LiquiLens brings to a lender's book.</p>
   </div>
 </section>
@@ -766,6 +901,10 @@
         <p>Seiche is our free, open source terminal for funding stress in the US money market. It runs on public data, publishes its forecasts before the outcome, and keeps a sealed scoreboard of hits and misses that anyone can audit at seiche.info. We run it because <b>an early warning vendor should have a public track record,</b> and because the research that watches the world's deepest money market is the same research that watches an Indian lender's book. Seiche stays free forever. It is the record; LiquiLens is the product.</p>
       </details>
       <details>
+        <summary>What is the MFI Risk Board on this page?</summary>
+        <p>It is the production system's live scoring board for India's registered microfinance lenders, rendered on this page straight from the same API the product runs on. The RBI's official register lists over 9,000 NBFCs, 95 of them NBFC MFIs. Every MFI with a vetted dossier of primary filings gets scored by the same ensemble that was validated on two crisis cycles, and the trajectory next to each name is its score drawn quarter by quarter. <b>Scores are disclosure based reads of public filings, not credit ratings.</b> Coverage is published, exclusions carry a stated reason, and a row is dropped when its filings go stale.</p>
+      </details>
+      <details>
         <summary>What happens to our data? How is it protected?</summary>
         <p>Every lender's book is isolated to that lender. The regulatory tables, CRR, SLR, ALM and reports, are scoped per tenant and the isolation is enforced by automated tests on every commit, so a request for another tenant's data returns nothing at all. Access runs on short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained ledger records every alert as it was published so the history cannot be quietly rewritten. <b>For pilots that cannot let data leave the building, the entire platform runs on the lender's own servers.</b></p>
       </details>
@@ -785,6 +924,7 @@
     {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. LiquiLens runs in production. The live walkthrough at demo.liquilens.in is open by invitation while we work with early design partners; request an access code there to be let in. Its Evidence tab replays the crisis validation record on real public filings with every source cited and every miss shown, while the treasury console around it runs on synthetic data. Pilot tenants run isolated on the same infrastructure. Treasury and risk leaders can also request access by contacting the founder through liquilens.in."}},
     {"@type": "Question", "name": "Has LiquiLens been tested on real data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, twice over, on the public record. A 36 institution replay of the 2018 to 2021 Indian crisis flagged 9 of 10 failures ahead of the record (excluding books concealed by fraud) at a median lead of 15 months, with a 1 in 10 false alarm rate on healthy controls and significance at p below 0.001. A fully out of sample replay of the 2025 microfinance cycle covered 11 more institutions with zero false alarms on 8 controls and flagged one lender below investment grade a quarter before the rating agencies moved. An earlier network signal study flagged 7 of 8 defaults of 2018 and 2019 at a median of 6.5 months. These are studies on public data; lender specific numbers come from a backtest on the lender's own book."}},
     {"@type": "Question", "name": "What is Seiche and why does LiquiLens run a free terminal?", "acceptedAnswer": {"@type": "Answer", "text": "Seiche is a free, open source terminal for funding stress in the US money market, built by the same desk as LiquiLens. It runs on public data, publishes forecasts before outcomes, and keeps a sealed public scoreboard of hits and misses at seiche.info. It exists because an early warning vendor should have a public track record anyone can audit. Seiche is free forever; LiquiLens is the commercial product."}},
+    {"@type": "Question", "name": "What is the LiquiLens MFI Risk Board?", "acceptedAnswer": {"@type": "Answer", "text": "The MFI Risk Board is LiquiLens's live scoring board for India's registered microfinance lenders. The RBI register lists over 9,000 NBFCs, 95 of them NBFC MFIs; every MFI with a vetted dossier of primary filings is scored by the same ensemble validated on two crisis cycles, with a quarter by quarter score trajectory. Scores are disclosure based reads of public filings, not credit ratings, coverage is published, and exclusions carry a stated reason."}},
     {"@type": "Question", "name": "How is lender data protected in LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "Every lender's book is isolated per tenant, including the regulatory tables for CRR, SLR, ALM and reports, and the isolation is enforced by automated tests on every commit. Access uses short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained point in time ledger records every alert as published. The platform can also run entirely on the lender's own servers."}}
   ]
 }
@@ -904,6 +1044,24 @@
     io4.observe(document.getElementById('leads'));
   })();
 
+  // one fetch helper for every live element: hard timeout, never throws past the caller
+  function liveJSON(url, ms){
+    const ctl = new AbortController();
+    const t = setTimeout(()=>ctl.abort(), ms || 9000);
+    return fetch(url,{mode:'cors',signal:ctl.signal})
+      .then(r=>{ if(!r.ok) throw new Error('unreachable'); return r.json(); })
+      .finally(()=>clearTimeout(t));
+  }
+  function fmtDate(iso){
+    if(!iso) return '';
+    const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date(iso + 'T00:00:00Z');
+    return d.getUTCDate() + ' ' + M[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+  }
+
+  // fetched once, consumed by the desk chip and the live desk panel
+  const seiPublic = liveJSON('https://api.seiche.info/api/public');
+
   // live Seiche reading: fetched from the public API in your browser; never faked
   (function(){
     const val = document.getElementById('seiVal');
@@ -912,8 +1070,7 @@
     const stamp = document.getElementById('seiStamp');
     const line = document.getElementById('seiLine');
     const proof = document.getElementById('seiProof');
-    fetch('https://api.seiche.info/api/public',{mode:'cors'})
-      .then(r=>{ if(!r.ok) throw new Error('unreachable'); return r.json(); })
+    seiPublic
       .then(d=>{
         const c = d.conclusion || {};
         if(typeof c.value !== 'number') throw new Error('no reading');
@@ -931,6 +1088,161 @@
         val.textContent = '—';
         line.textContent = 'No number is shown rather than a stale one. The terminal itself is one click below, and it always carries its own as of stamp.';
       });
+  })();
+
+  // the live board: the production MFI Risk Board, rendered from the product's own API
+  (function(){
+    const table = document.getElementById('mfiTable');
+    if(!table) return;
+    const stamp = document.getElementById('boardStamp');
+    const census = document.getElementById('boardCensus');
+    const scroll = document.getElementById('boardScroll');
+    const fallback = document.getElementById('boardFallback');
+    const tape = document.getElementById('rbiTape');
+    const tapeRows = document.getElementById('tapeRows');
+    const API = 'https://api.liquilens.in/api';
+
+    function spark(trend){
+      if(!trend || trend.length < 2) return '<span class="asof">first vetted quarter</span>';
+      const w = 92, h = 26, pad = 3;
+      const vals = trend.map(t=>t.score);
+      const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      const span = (hi - lo) || 1;
+      const pts = vals.map((v,i)=>{
+        const x = pad + i * (w - 2*pad) / (vals.length - 1);
+        const y = h - pad - (v - lo) / span * (h - 2*pad);
+        return [x.toFixed(1), y.toFixed(1)];
+      });
+      const d = 'M' + pts.map(p=>p.join(',')).join(' L');
+      const last = pts[pts.length-1];
+      const title = trend.map(t=>t.q + ' ' + t.score.toFixed(1)).join(' → ');
+      return '<svg class="spark" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Score trajectory ' + title + '"><title>' + title + '</title><path d="' + d + '"/><circle cx="' + last[0] + '" cy="' + last[1] + '" r="2.4"/></svg>';
+    }
+
+    Promise.all([
+      liveJSON(API + '/universe/mfi-board'),
+      liveJSON(API + '/universe/summary').catch(()=>null)
+    ]).then(function(res){
+      const board = res[0], summary = res[1];
+      const rows = (board.rows || []).slice().sort((a,b)=>a.score - b.score);
+      if(!rows.length) throw new Error('empty');
+      const tb = table.querySelector('tbody');
+      tb.innerHTML = rows.map(function(r){
+        const g = (r.grade === 'AAA' || r.grade === 'AA') ? r.grade : 'other';
+        const shift = r.basis_shift ? '<span class="dbasis" title="the latest filing discloses a different factor set than the prior one; the change is shown, not blended">Δ basis</span>' : '';
+        return '<tr>' +
+          '<td class="inst-name">' + r.name.replace(/ (Limited|Private Limited|Ltd\.?)$/,'') + shift + '</td>' +
+          '<td><span class="grade ' + g + '">' + r.grade + '</span></td>' +
+          '<td class="score">' + r.score.toFixed(1) + '</td>' +
+          '<td>' + spark(r.trend) + '</td>' +
+          '<td class="asof">' + r.quarter + ' · ' + r.age_months + ' mo · ' + (r.basis||[]).join(', ') + '</td>' +
+        '</tr>';
+      }).join('');
+      scroll.hidden = false;
+      fallback.hidden = true;
+      const cov = board.coverage || {};
+      const maxAge = Math.max.apply(null, rows.map(r=>r.age_months));
+      let c = '';
+      if(summary && summary.aggregates){ c += summary.aggregates.registered_count.toLocaleString('en-IN') + ' NBFCs on the RBI register · '; }
+      c += (cov.registered_mfis || 95) + ' NBFC MFIs · ' + (cov.scored || rows.length) + ' scored · every filing within ' + maxAge + ' months';
+      census.textContent = c;
+      stamp.textContent = 'live from api.liquilens.in · the production scoring path, not a copy';
+    }).catch(function(){
+      stamp.textContent = 'the production board did not answer from here';
+    });
+
+    liveJSON(API + '/economic/rbi-actions').then(function(d){
+      const acts = (d.data || []).slice(0,5);
+      if(!acts.length) return;
+      tapeRows.innerHTML = acts.map(function(a){
+        return '<a href="' + a.url + '" target="_blank" rel="noopener"><span class="d">' + (a.date ? fmtDate(a.date) : '') + '</span>' + a.title + '</a>';
+      }).join('');
+      tape.hidden = false;
+    }).catch(function(){ /* the tape stays hidden rather than empty */ });
+  })();
+
+  // the Seiche desk panel: plumbing prints, the pre stated forecast, crunch windows, scoreboard events
+  (function(){
+    const body = document.getElementById('seiBoardBody');
+    if(!body) return;
+    const stamp = document.getElementById('seiBoardStamp');
+    const fb = document.getElementById('seiBoardFallback');
+    Promise.all([
+      liveJSON('https://api.seiche.info/api/gauge'),
+      liveJSON('https://api.seiche.info/api/overview'),
+      seiPublic.catch(()=>null)
+    ]).then(function(res){
+      const gauge = res[0], over = res[1], pub = res[2];
+
+      const h = (over && over.headline) || {};
+      const P = [
+        ['SOFR', h.sofr_pct, '%'], ['EFFR', h.effr_pct, '%'], ['IORB', h.iorb_pct, '%'],
+        ['Reserves', h.reserves_b, '$B'], ['ON RRP', h.rrp_b, '$B']
+      ];
+      document.getElementById('seiPlumb').innerHTML = P.map(function(p){
+        const cell = p[1] || {};
+        const v = typeof cell.value === 'number'
+          ? (p[2] === '%' ? cell.value.toFixed(2) + '%'
+             : cell.value < 10 ? cell.value.toFixed(1)
+             : Math.round(cell.value).toLocaleString('en-US'))
+          : '·';
+        return '<div><span class="k">' + p[0] + (p[2] === '$B' ? ' $B' : '') + '</span><span class="v">' + v + '</span><span class="a">' + (cell.asof || '') + '</span></div>';
+      }).join('');
+
+      const t = gauge.next_turn || {};
+      if(typeof t.forecast_bp === 'number'){
+        document.getElementById('turnBp').textContent = (t.forecast_bp >= 0 ? '+' : '') + t.forecast_bp.toFixed(1) + ' bp';
+        const band = t.band_bp || [];
+        const dots = Array.from({length:5},(_,i)=>'<i class="' + (i < (t.severity||0) ? 'on' : '') + '"></i>').join('');
+        document.getElementById('turnBand').innerHTML = (band.length === 2 ? 'band ' + band[0] + ' to +' + band[1] + ' bp · ' : '') + 'severity <span class="sevdots">' + dots + '</span> ' + (t.severity||0) + ' of 5';
+        document.getElementById('turnNote').textContent = 'The repo rate turn expected at ' + (t.mode||'').replace(/_/g,' ') + ', ' + fmtDate(t.date) + '. Published before the date, sealed in the record, scored after. That is the whole method.';
+      }
+
+      const cw = gauge.crunch_windows || [];
+      document.getElementById('seiCrunch').innerHTML = cw.slice(0,3).map(function(w){
+        return '<li><span class="cd">' + fmtDate(w.date) + '</span><span class="cr">' + w.reason + '</span></li>';
+      }).join('') || '<li><span class="cd">none</span><span class="cr">no dated pressure points on the calendar right now</span></li>';
+
+      const eps = (pub && pub.proof && pub.proof.episodes) || [];
+      if(eps.length > 1){
+        const times = eps.map(e=>new Date(e.date).getTime());
+        const t0 = Math.min.apply(null,times), t1 = Math.max.apply(null,times);
+        document.getElementById('evLine').innerHTML = eps.map(function(e){
+          const x = ((new Date(e.date).getTime() - t0) / (t1 - t0)) * 100;
+          const oos = e.in_sample === false;
+          const edge = x > 72 ? ' tip-left' : (x < 10 ? ' tip-right' : '');
+          return '<span class="ev-dot' + (oos ? ' oos' : '') + edge + '" tabindex="0" style="left:' + x.toFixed(1) + '%"><span class="tip">' + e.episode.split('(')[0].trim() + (oos ? ' · out of sample' : '') + '</span></span>';
+        }).join('');
+        document.getElementById('evStart').textContent = new Date(t0).getUTCFullYear();
+        document.getElementById('evEnd').textContent = new Date(t1).getUTCFullYear();
+      }
+
+      body.hidden = false;
+      stamp.textContent = 'live from api.seiche.info · ' + (gauge.generated_at||'').slice(0,16).replace('T',' ') + 'Z';
+    }).catch(function(){
+      fb.hidden = false;
+      stamp.textContent = 'the terminal did not answer from here';
+    });
+  })();
+
+  // the ticker earns its keep: real prints appended when the data plane answers
+  (function(){
+    const halves = document.querySelectorAll('#tickerTrack .half');
+    if(!halves.length) return;
+    const API = 'https://api.liquilens.in/api/economic';
+    Promise.all([liveJSON(API + '/fx').catch(()=>null), liveJSON(API + '/rates').catch(()=>null)]).then(function(res){
+      const fx = ((res[0]||{}).data)||[], rates = ((res[1]||{}).data)||[];
+      const pick = (arr, ind)=>{ const r = arr.find(x=>x.indicator===ind); return r ? r.value : null; };
+      const items = [];
+      const usdinr = pick(fx,'fx_USD_INR'); if(usdinr) items.push(['USD/INR', usdinr.toFixed(2)]);
+      const eurinr = pick(fx,'fx_EUR_INR'); if(eurinr) items.push(['EUR/INR', eurinr.toFixed(2)]);
+      const t10 = pick(rates,'DGS10'); if(t10) items.push(['US 10Y', t10.toFixed(2)+'%']);
+      const hy = pick(rates,'BAMLH0A0HYM2'); if(hy) items.push(['US HY OAS', Math.round(hy*100)+' bp']);
+      const vix = pick(rates,'VIXCLS'); if(vix) items.push(['VIX', vix.toFixed(1)]);
+      if(!items.length) return;
+      const html = items.map(i=>'<span>' + i[0] + ' <b class="live">' + i[1] + '</b></span>').join('') + '<span class="tag sei-print">live prints via our data plane</span>';
+      halves.forEach(h=>{ h.insertAdjacentHTML('beforeend', html); });
+    }).catch(function(){ /* the indicative rates stand alone */ });
   })();
 
   // LCR countdown — runs entirely client-side, nothing leaves the page
