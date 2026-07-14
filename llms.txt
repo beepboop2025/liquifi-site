@@ -1,9 +1,11 @@
 # LiquiLens
 
-> LiquiLens is an autonomous treasury and liquidity platform for Indian businesses and lenders. It forecasts cash, prices liquidity, scores credit, and routes idle balances through regulated rails, so a business earns on every rupee overnight and a lender sees liquidity stress before it becomes a default.
+> LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags the ones drifting toward distress years before ratings move. Validated in the open on two markets: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, and 73% recall across 550 US bank failures. Every call lands on a tamper evident, timestamped record. The same engine carries treasury, liquidity risk and credit scoring for Indian lenders and businesses.
 
 ## What it does
 
+- Failure Radar: a live board over India's regulated lenders (banks, small finance banks, co-operatives, NBFCs, MFIs, HFCs) reading each institution four ways at once: a failure probability fitted on the real collapses in the record, distance to the RBI's own PCA and SAF action zones, funding fragility from the liability side, and a market implied distance to default for listed names, repriced daily
+- Attested record: a hash chained point in time ledger of every watchlist and alert as published, signed with Ed25519 and anchored via OpenTimestamps, so the track record is independently verifiable
 - Multi horizon cash and liquidity forecasting for businesses and lenders
 - Liquidity at Risk: Monte Carlo simulation of cash shortfalls over a rolling horizon
 - Liquidity Credit Score: an LCR and NSFR driven score of buffer adequacy, funding stability and concentration
@@ -25,7 +27,7 @@
 
 ## Proof on the public record
 
-- A 36 institution replay of the 2018 to 2021 Indian crisis (failed lenders, stressed survivors and healthy controls, point in time audited): 9 of 10 failures flagged ahead of the record excluding books concealed by fraud, median lead 15 months, longest 29 months, false alarm rate 1 in 10 on healthy controls, significant at p below 0.001 and robust across a broad threshold sweep
+- A 48 institution replay across two decades of Indian failures (failed lenders, stressed survivors and healthy controls, point in time audited, Global Trust Bank 2004 through the 2025 microfinance cycle): 16 of 18 failures flagged ahead of the record excluding books concealed by fraud, median lead 21 months, discriminating at AUC 0.713, significant at p below 0.001 and robust across a broad threshold sweep; conservative mode caught 11 of 16 with zero false alarms on healthy controls, sensitive mode caught 16 of 18 at the price of three healthy names warned, and both settings ship together
 - A fully out of sample replay of the 2025 microfinance cycle: 11 more institutions, zero false alarms on 8 healthy controls, and one lender flagged below investment grade a quarter before the rating agencies moved
 - The engine holds its grade down when a stressed lender moves bad loans to an asset reconstruction company and reports a managed recovery; that blind spot was found internally and fixed with tests
 - The earlier network signal study on sourced public rating timelines: 7 of 8 defaults of 2018 and 2019 flagged early at a median of 6.5 months, DHFL at 8 months, Altico at 11, Yes Bank at 17 months in the pre stated confirmatory phase
@@ -50,7 +52,7 @@ Live in production. Public walkthrough at https://demo.liquilens.in (synthetic d
 
 ## Pages
 
-- [Home](https://liquilens.in/): product overview, the six engines, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
+- [Home](https://liquilens.in/): product overview, the ten engines, the live Failure Radar and MFI Risk Board, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
 
 ## LiquiLens US (the US bank layer, at /us/)
 
