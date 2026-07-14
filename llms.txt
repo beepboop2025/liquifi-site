@@ -1,6 +1,6 @@
 # LiquiLens
 
-> LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags the ones drifting toward distress years before ratings move. Validated in the open on two markets: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, and 73% recall across 550 US bank failures. Every call lands on a tamper evident, timestamped record. The same engine carries treasury, liquidity risk and credit scoring for Indian lenders and businesses.
+> LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags the ones drifting toward distress years before ratings move. Validated in the open on three markets: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures, and seven named European case files from Northern Rock to Credit Suisse replayed through the same unrecalibrated lenses. Every call lands on a tamper evident, timestamped record. The same engine carries treasury, liquidity risk and credit scoring for Indian lenders and businesses.
 
 ## What it does
 
@@ -31,6 +31,7 @@
 - A fully out of sample replay of the 2025 microfinance cycle: 11 more institutions, zero false alarms on 8 healthy controls, and one lender flagged below investment grade a quarter before the rating agencies moved
 - The engine holds its grade down when a stressed lender moves bad loans to an asset reconstruction company and reports a managed recovery; that blind spot was found internally and fixed with tests
 - The earlier network signal study on sourced public rating timelines: 7 of 8 defaults of 2018 and 2019 flagged early at a median of 6.5 months, DHFL at 8 months, Altico at 11, Yes Bank at 17 months in the pre stated confirmatory phase
+- Seven European case files served beside the Indian and US records (Credit Suisse, Banco Popular, Northern Rock, Banco Espirito Santo failed; Deutsche Bank and Monte dei Paschi stressed survivors; UBS control), replayed point in time through the unrecalibrated Indian lenses from cited primary filings: Popular caught by the disclosure score 29 months out, Northern Rock lit up by its wholesale funding split 20 months before the 2007 run, Credit Suisse investment grade on reported ratios to the end and caught by the deposit run lens. Case studies, deliberately not a cohort statistic
 - Each of the five early warning signals shipped only after beating a pre registered bar on held out data; the validation scoreboard is inside the product model card
 - These are studies on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
 
