@@ -1267,7 +1267,10 @@
     const scroll = document.getElementById('radarScroll');
     const fallback = document.getElementById('radarFallback');
     const TYPE = {bank:'Bank', sfb:'SFB', ucb:'Co-op', nbfc:'NBFC', mfi:'MFI', hfc:'HFC'};
+    const TIERS = ['red','orange','yellow','green'];
 
+    // the API is ours, but the page should stay safe even if it ever is not
+    function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     function pd(x){ return (x*100).toFixed(2) + '%'; }
     function move(d){
       if(d == null) return '<span class="mv flat">first vintage</span>';
@@ -1285,12 +1288,13 @@
       tb.innerHTML = rows.slice(0, 12).map(function(r){
         const dd = (r.market && typeof r.market.dd === 'number')
           ? r.market.dd.toFixed(2)
-          : '<span class="asof" title="' + ((r.market && r.market.not_computed) || 'not computed') + '">unlisted</span>';
+          : '<span class="asof" title="' + esc((r.market && r.market.not_computed) || 'not computed') + '">unlisted</span>';
         const why = (r.signals_fired && r.signals_fired.length) ? r.signals_fired.join(', ') : 'no signals fired';
+        const tier = TIERS.indexOf(r.tier) >= 0 ? r.tier : 'green';
         return '<tr>' +
-          '<td class="inst-name">' + r.name.replace(/ (Limited|Private Limited|Ltd\.?)$/,'') + '</td>' +
-          '<td><span class="itype">' + (TYPE[r.inst_type] || r.inst_type) + '</span></td>' +
-          '<td><span class="tier ' + r.tier + '" title="' + why + '">' + r.tier.toUpperCase() + '</span></td>' +
+          '<td class="inst-name">' + esc(String(r.name).replace(/ (Limited|Private Limited|Ltd\.?)$/,'')) + '</td>' +
+          '<td><span class="itype">' + esc(TYPE[r.inst_type] || r.inst_type) + '</span></td>' +
+          '<td><span class="tier ' + tier + '" title="' + esc(why) + '">' + esc(tier.toUpperCase()) + '</span></td>' +
           '<td class="score" style="text-align:right">' + pd(r.hazard.pd_12m) + '</td>' +
           '<td style="text-align:right">' + move(r.movement && r.movement.delta_pd_12m) + '</td>' +
           '<td class="score" style="text-align:right">' + dd + '</td>' +
