@@ -587,7 +587,7 @@
   <div class="wrap">
     <span class="eyebrow reveal">What LiquiLens is</span>
     <h2 class="reveal">An early warning system for bank and lender failure, <em>proven in the open.</em></h2>
-    <p class="body reveal"><b>LiquiLens reads what institutions and regulators publish</b>, funding structure, filings and market signals, and flags the ones drifting toward distress. The method is validated on two markets on public data alone: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, and 73% recall across 550 US bank failures including the 2023 to 2026 wave. Every call is timestamped on a tamper evident record, so the track record cannot be rewritten later. The same engine carries the treasury side: cash forecasting, liquidity risk and credit scoring, calibrated to Indian money market data, not retrofitted from a Western playbook.</p>
+    <p class="body reveal"><b>LiquiLens reads what institutions and regulators publish</b>, funding structure, filings and market signals, and flags the ones drifting toward distress. The method is validated on three markets on public data alone: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures including the 2023 to 2026 wave, and seven European case files from Northern Rock to Credit Suisse replayed through the same lenses with every figure audited against primary filings. Every call is timestamped on a tamper evident record, so the track record cannot be rewritten later. The same engine carries the treasury side: cash forecasting, liquidity risk and credit scoring, calibrated to Indian money market data, not retrofitted from a Western playbook.</p>
   </div>
 </section>
 
@@ -656,6 +656,39 @@
       <div class="engine"><div class="no">10</div><h3>Market Distance</h3><p>A daily market implied distance to default for 25 listed lenders, so the board reprices between filings instead of waiting for the next quarter.</p></div>
     </div>
     <p class="engines-note reveal">Research grounded · India calibrated · built to survive a real risk review.<br>The regulatory frame the engines compute against: <a href="https://www.bis.org/publ/bcbs238.htm" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Basel III LCR standard (BIS, 2013)</a> · <a href="https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=11719&amp;Mode=0" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">RBI liquidity risk framework for NBFCs (2019)</a> · RBI Scale Based Regulation (2021).</p>
+  </div>
+</section>
+
+<!-- the record, across three banking systems -->
+<section class="band" id="record">
+  <div class="wrap">
+    <span class="eyebrow reveal">The validation record</span>
+    <h2 class="reveal">One method. Three banking systems. <em>Receipts in every one.</em></h2>
+    <p class="body reveal">A failure engine you can only audit in one country is a story about that country. The record below is served by the same public API the product runs on, misses included, and each panel states what kind of claim it supports.</p>
+    <div class="layers reveal">
+      <a class="layer" href="https://demo.liquilens.in/?tab=evidence" target="_blank" rel="noopener">
+        <span class="badge live">Backtested</span>
+        <span class="lno">India · institution level</span>
+        <h3>48 replayed</h3>
+        <p>Two decades of failures, stressed survivors and healthy controls from vetted filings. 16 of 18 non fraud failures flagged at a median lead of 21 months, with the misses and the false alarms published beside the catches.</p>
+        <span class="go"><span>Open the Indian record →</span></span>
+      </a>
+      <a class="layer" href="https://demo.liquilens.in/?tab=evidence&amp;market=us" target="_blank" rel="noopener">
+        <span class="badge live">Backtested</span>
+        <span class="lno">United States · industry wide</span>
+        <h3>550 failures</h3>
+        <p>Every FDIC insured bank scored quarterly from free call report data. 73.1% of failures since 2008 flagged at a median lead of 21.7 months, AUC 0.853, and the five recent misses named. All five were fraud.</p>
+        <span class="go"><span>Open the US record →</span></span>
+      </a>
+      <a class="layer" href="https://demo.liquilens.in/?tab=evidence&amp;market=europe" target="_blank" rel="noopener">
+        <span class="badge new">Audited</span>
+        <span class="lno">Europe · named case files</span>
+        <h3>7 case files</h3>
+        <p>Northern Rock to Credit Suisse, replayed through the same lenses with no recalibration. Every figure audited against primary filings, 142 checked and 3 corrected in the open. Case studies, deliberately not a cohort statistic.</p>
+        <span class="go"><span>Open the case files →</span></span>
+      </a>
+    </div>
+    <p class="stats-note reveal">Different records support different kinds of claim, and the difference is stated on each panel: an institution level backtest in India, a budgeted watchlist backtest in the United States, named case files in Europe. The machine readable index is public at <a href="https://api.liquilens.in/api/evidence/markets" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">api.liquilens.in/api/evidence/markets</a>.</p>
   </div>
 </section>
 
