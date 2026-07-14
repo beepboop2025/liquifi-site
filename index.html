@@ -1288,7 +1288,7 @@
       tb.innerHTML = rows.slice(0, 12).map(function(r){
         const dd = (r.market && typeof r.market.dd === 'number')
           ? r.market.dd.toFixed(2)
-          : '<span class="asof" title="' + esc((r.market && r.market.not_computed) || 'not computed') + '">unlisted</span>';
+          : '<span class="asof" title="' + esc((r.market && r.market.not_computed) || 'not computed') + '">n/a</span>';
         const why = (r.signals_fired && r.signals_fired.length) ? r.signals_fired.join(', ') : 'no signals fired';
         const tier = TIERS.indexOf(r.tier) >= 0 ? r.tier : 'green';
         return '<tr>' +
