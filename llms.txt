@@ -46,7 +46,7 @@
 
 ## Status
 
-Live in production. Public walkthrough at https://demo.liquilens.in (synthetic data, no signup). Pilot tenants run isolated on the same infrastructure. Design partners and early access: contact the founder via https://liquilens.in/ or LinkedIn (https://www.linkedin.com/in/mrinal-m-2280343b5/).
+Live in production. Public walkthrough at https://demo.liquilens.in (synthetic data, no signup). Pilot tenants run isolated on the same infrastructure. Design partners and early access: contact the founder at mrinal091997@liquilens.in or via https://liquilens.in/.
 
 ## Pages
 
