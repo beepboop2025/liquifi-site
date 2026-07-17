@@ -1,0 +1,86 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0A0F1C;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1500px;height:500px;background:var(--ink);overflow:hidden;position:relative;font-family:'Inter',system-ui,sans-serif}
+.glow{position:absolute;inset:0;background:radial-gradient(80% 120% at 82% 10%,rgba(227,183,120,.10),transparent 62%)}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;color:var(--text);letter-spacing:-0.02em;line-height:1.12}
+.serif em{font-style:italic;color:var(--gold);font-weight:400}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+/* brand chip, top-left (X avatar covers bottom-left, so brand lives up here) */
+.chip{position:absolute;left:64px;top:52px;display:flex;align-items:center;gap:14px}
+.chip .m{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(150deg,var(--gold),var(--gold-deep))}
+.chip .m span{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;color:#1A1206}
+.chip .n{font-weight:600;font-size:24px;color:var(--text);letter-spacing:-0.01em}
+.markets{position:absolute;right:64px;top:62px;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.22em;color:var(--muted2)}
+.hero{position:absolute;left:64px;top:142px;width:760px}
+.hero .serif{font-size:64px}
+.stats{position:absolute;left:64px;top:330px;display:flex;gap:0;font-family:'IBM Plex Mono',monospace}
+.stat{padding:0 34px;border-left:1px solid var(--line)}
+.stat:first-child{padding-left:0;border-left:none}
+.stat b{display:block;font-size:30px;font-weight:500;color:var(--gold);letter-spacing:-0.01em}
+.stat span{display:block;margin-top:7px;font-size:13.5px;letter-spacing:.10em;color:var(--muted)}
+.url{position:absolute;right:64px;bottom:40px;font-family:'IBM Plex Mono',monospace;font-size:19px;letter-spacing:.08em;color:var(--muted2)}
+.url b{color:var(--gold);font-weight:500}
+.chart{position:absolute;right:36px;top:76px}
+</style>
+<body>
+<div class="glow"></div>
+
+<div class="chip">
+  <div class="m"><span>L</span></div>
+  <div class="n">LiquiLens</div>
+</div>
+
+<div class="markets">INDIA&nbsp;&nbsp;·&nbsp;&nbsp;UNITED STATES&nbsp;&nbsp;·&nbsp;&nbsp;EUROPE</div>
+
+<div class="hero">
+  <div class="serif">See failure coming,<br><em>years before ratings move.</em></div>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>550</b><span>US FAILURES REPLAYED</span></div>
+  <div class="stat"><b>73.1%</b><span>RECALL, POINT IN TIME</span></div>
+  <div class="stat"><b>21.7 mo</b><span>MEDIAN LEAD</span></div>
+  <div class="stat"><b>0</b><span>MISSES HIDDEN</span></div>
+</div>
+
+<!-- score-curve motif: quarterly risk score rising to a flag, failure line far right -->
+<svg class="chart" width="600" height="330" viewBox="0 0 600 330" fill="none">
+  <!-- faint grid -->
+  <g stroke="#1E2740" stroke-width="1">
+    <line x1="0" y1="60"  x2="560" y2="60"/>
+    <line x1="0" y1="130" x2="560" y2="130"/>
+    <line x1="0" y1="200" x2="560" y2="200"/>
+    <line x1="0" y1="270" x2="560" y2="270"/>
+  </g>
+  <!-- area under curve -->
+  <path d="M20 262 L90 250 L160 246 L230 214 L300 178 L370 118 L370 300 L20 300 Z" fill="url(#fade)" opacity=".5"/>
+  <!-- score curve: calm, then rising to the flag -->
+  <path d="M20 262 L90 250 L160 246 L230 214 L300 178 L370 118" stroke="#E3B778" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- dotted continuation after the flag -->
+  <path d="M370 118 L420 108 L470 112" stroke="#C8954E" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <!-- first-flagged marker -->
+  <circle cx="370" cy="118" r="7" fill="#E3B778"/>
+  <circle cx="370" cy="118" r="14" stroke="#E3B778" stroke-opacity=".35" stroke-width="2"/>
+  <circle cx="370" cy="118" r="22" stroke="#E3B778" stroke-opacity=".15" stroke-width="2"/>
+  <text x="370" y="86" text-anchor="middle" font-family="IBM Plex Mono" font-size="15" fill="#E3B778" letter-spacing="1">first flagged</text>
+  <!-- failure line -->
+  <line x1="540" y1="40" x2="540" y2="290" stroke="#E06A6A" stroke-width="2"/>
+  <text x="528" y="60" text-anchor="end" font-family="IBM Plex Mono" font-size="15" fill="#E06A6A" letter-spacing="1">failure</text>
+  <!-- lead-time brace -->
+  <line x1="370" y1="305" x2="540" y2="305" stroke="#8B94AB" stroke-width="1.5"/>
+  <line x1="370" y1="299" x2="370" y2="311" stroke="#8B94AB" stroke-width="1.5"/>
+  <line x1="540" y1="299" x2="540" y2="311" stroke="#8B94AB" stroke-width="1.5"/>
+  <text x="455" y="327" text-anchor="middle" font-family="IBM Plex Mono" font-size="15" fill="#8B94AB" letter-spacing="1">the lead ratings never give</text>
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3B778" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#E3B778" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="url"><b>liquilens.in</b></div>
+</body>
