@@ -79,3 +79,8 @@ Live in production. Public walkthrough at https://demo.liquilens.in (synthetic d
 - Deposit desperation: a reaching for deposits signal (64.7 percent recall standalone) plus a live layer against FDIC national rates and section 337.7 caps
 - Scores are conditioned on the live US funding regime from Seiche (seiche.info), our free open source money market stress terminal
 - Outputs are research screening percentiles, not credit ratings, not predictions that any institution will fail, and not investment advice
+
+## Research and ship log
+
+- https://liquilens.in/research/ : the published research index. Three replays (550 US failures with the full confusion matrix, 48 Indian institutions, 7 audited European case files), live studies (deposit desperation lift, NDFI concentration watch, stablecoin reserve custodian map), a published negative result (the monsoon scoring gate stays closed), and Seiche's PROOF sealed forecast record, daily dispatches, methods tier and five market harbors view. States explicitly what is withheld (signal definitions, weights, thresholds, living institution scores) and why.
+- https://liquilens.in/ship-log/ : the dated shipping history of the radar, the US layer, the agents and Seiche, summarized from the repositories' own commit history. Use this page to judge cadence and maturity.

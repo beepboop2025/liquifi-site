@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LiquiLens Ship Log | What shipped, dated by git</title>
+<meta name="description" content="The dated shipping history of the LiquiLens failure radar and Seiche, our open funding stress terminal. Every entry is real and dated by the repositories' own history.">
+<link rel="canonical" href="https://liquilens.in/ship-log/">
+<meta property="og:title" content="LiquiLens Ship Log">
+<meta property="og:description" content="What shipped, week by week. Every entry dated by the repositories' own history.">
+<meta property="og:image" content="https://liquilens.in/og-radar.png">
+<meta property="og:url" content="https://liquilens.in/ship-log/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0A0F1C;--ink2:#0E1424;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 28px}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-0.02em;line-height:1.12}
+.serif em{font-style:italic;color:var(--gold);font-weight:400}
+nav{border-bottom:1px solid var(--line);padding:20px 0;position:sticky;top:0;background:rgba(10,15,28,.92);backdrop-filter:blur(10px);z-index:9}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-weight:600;font-size:18px}
+.brand:hover{text-decoration:none}
+.mark{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-family:'Fraunces',serif;font-weight:600;font-size:18px}
+.brand small{color:var(--muted2);font-weight:400;font-size:13px;margin-left:2px}
+.navlinks{display:flex;gap:22px;font-size:14.5px}
+.navlinks a{color:var(--muted)}.navlinks a:hover{color:var(--gold);text-decoration:none}
+header.hero{padding:80px 0 26px;background:radial-gradient(70% 90% at 80% 0%,rgba(227,183,120,.07),transparent 60%)}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--gold)}
+h1{font-size:clamp(36px,5vw,54px);margin:20px 0 16px}
+.lede{color:var(--muted);max-width:720px;font-size:17.5px}
+.lede b{color:var(--text)}
+.honest{margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted2);max-width:760px}
+section{padding:44px 0 70px}
+h2.month{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:26px;color:var(--text);margin:38px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+h2.month:first-of-type{margin-top:6px}
+.entry{display:grid;grid-template-columns:86px 92px 1fr;gap:16px;padding:13px 0;border-bottom:1px dashed rgba(30,39,64,.6);align-items:baseline}
+.entry:last-child{border-bottom:none}
+.d{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted2);white-space:nowrap}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:2px 0;color:var(--teal)}
+.tag.gold{color:var(--gold)}.tag.red{color:var(--red)}.tag.dim{color:var(--muted2)}
+.t{color:var(--muted);font-size:15.5px}
+.t b{color:var(--text);font-weight:600}
+footer{border-top:1px solid var(--line);padding:32px 0 44px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted2)}
+footer a{color:var(--muted)}
+@media (max-width:640px){.entry{grid-template-columns:70px 1fr}.tag{display:none}.navlinks{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="/"><span class="mark">L</span>LiquiLens <small>ship log</small></a>
+  <span class="navlinks">
+    <a href="/">The radar</a>
+    <a href="/us/">US bank risk</a>
+    <a href="/research/">Research</a>
+    <a href="https://seiche.info" target="_blank" rel="noopener">Seiche</a>
+  </span>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Ship log · the time trail</div>
+  <h1 class="serif">What shipped, <em>dated by git.</em></h1>
+  <p class="lede">A product's age is proven by a sequence of dates, not a claim. Every entry below is real and dated by the repositories' own commit history, across the radar, the US layer, the agents and <b>Seiche</b>, our open source terminal.</p>
+  <p class="honest">Honesty note: entries are summarized for readers, security specifics and internal infrastructure are deliberately omitted, and corrections appear in the log like everything else.</p>
+</div></header>
+
+<section><div class="wrap">
+
+  <h2 class="month">July 2026 · week three</h2>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>This research page ships:</b> eleven studies and method notes across LiquiLens and Seiche, negative results and corrections included. <a href="/research/">Read it →</a></span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">US</span><span class="t"><b>Fund data feed contract:</b> point in time delivery with knowable_at stamps, revision reasons and a publication ledger, plus a full universe quarterly US score export as an immutable file set.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">DATA</span><span class="t"><b>Bond Market Watch</b> joins public signals: credit spreads, curve inversion and rate levels from seven public series. First reading: all seven calm.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">DATA</span><span class="t"><b>Allocator Watch:</b> the Norwegian sovereign fund's full holdings read against the covered universe, entries, exits, adds and trims flagged. The MOVE index and US pension 13F watch follow the same day.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag dim">SITE</span><span class="t"><b>Undertow</b>, the cross market liquidity map, gets its own page. The site and the X account now cross link, with new failure radar banner art.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">AGENTS</span><span class="t"><b>The Telegram desks pair up:</b> the LiquiLens bot and the Seiche bot answer in tandem, institutions on one side, plumbing on the other.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Scuttlebutt:</b> press attention on the plumbing itself, display only, from public news volume.</span></div>
+  <div class="entry"><span class="d">17 Jul</span><span class="tag">DATA</span><span class="t"><b>News evidence receipts:</b> flagged institutions now carry linked press receipts behind each flag. Trial, capped, display only.</span></div>
+  <div class="entry"><span class="d">16 Jul</span><span class="tag gold">CLI</span><span class="t"><b>liquilens terminal v0.3.0:</b> a dual region terminal UI with alerting and an offline cache.</span></div>
+  <div class="entry"><span class="d">16 Jul</span><span class="tag">RADAR</span><span class="t"><b>Exposure Watch:</b> a lender's own counterparty book, watched by the same engine that watches the market.</span></div>
+  <div class="entry"><span class="d">16 Jul</span><span class="tag">DATA</span><span class="t"><b>Public signals go standalone:</b> a market regime detector and a per institution news watch, free public data end to end, sitting beside the scores and never inside them.</span></div>
+  <div class="entry"><span class="d">16 Jul</span><span class="tag dim">DEMO</span><span class="t"><b>Two data modes, labeled:</b> the real public record versus the full product, with an honesty explainer at the door.</span></div>
+
+  <h2 class="month">July 2026 · week two</h2>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>The paper pipeline lands:</b> nine recent papers become seven engines, every one gated behind a pre registered study before it may touch a score.</span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag">RADAR</span><span class="t"><b>Conformal alarm passes its gate</b> and enters the watchlist tier: distribution free guarantees on the board, lift only.</span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag red">RESEARCH</span><span class="t"><b>The monsoon study returns below bar.</b> The scoring gate stays closed, monsoon reads as context only, and the negative result is published. <a href="/research/">Why we do this →</a></span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag">RADAR</span><span class="t"><b>LiquiLens goes global:</b> the US region joins India on one platform, with an environment layer that sits beside the scores by design.</span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag">AGENTS</span><span class="t"><b>Agent access ships:</b> an MCP endpoint and a grounded ask the desk layer that refuses to answer beyond its sources. The banking fragility desk arrives in Telegram.</span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>Europe audit:</b> every published figure in the seven case files independently verified against primary filings. 142 checked, 3 corrected, corrections left visible.</span></div>
+  <div class="entry"><span class="d">15 Jul</span><span class="tag">SEICHE</span><span class="t"><b>The Sounding:</b> one board readable at three depths, and the whole terminal re skinned. Directional spillover across the harbors ships the same day.</span></div>
+  <div class="entry"><span class="d">14 Jul</span><span class="tag dim">SITE</span><span class="t"><b>Repositioned: the failure radar.</b> The /us/ layer page ships with the full validation record, the NDFI watch and the stablecoin reserve custodian map.</span></div>
+  <div class="entry"><span class="d">14 Jul</span><span class="tag">RADAR</span><span class="t"><b>The Failure Radar board ships in product:</b> watchlist quadrant on the Universe tab, the failure PD stack validated on the corpus.</span></div>
+  <div class="entry"><span class="d">14 Jul</span><span class="tag red">SITE</span><span class="t"><b>A copy correction, shipped as a correction:</b> one /us/ claim we could not fully defend was replaced with the frozen weights claim and a forward sealed record commitment.</span></div>
+  <div class="entry"><span class="d">13 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>Validation corpus expands 36 → 48 institutions,</b> every new dossier cited to primary filings, the tranche audit shipped with the product.</span></div>
+  <div class="entry"><span class="d">13 Jul</span><span class="tag">RADAR</span><span class="t"><b>MFI Risk Board:</b> the crisis ensemble pointed at today's official lender registry, with score trajectories rather than dots.</span></div>
+  <div class="entry"><span class="d">13 Jul</span><span class="tag">RADAR</span><span class="t"><b>The as published ledger gets teeth:</b> Ed25519 signing with external timestamp anchoring over the point in time record.</span></div>
+  <div class="entry"><span class="d">13 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Seiche goes fully open:</b> every tab and tool free for everyone, no sign in, AGPL 3.0. The daily dispatch begins, one letter every day, each a linkable page.</span></div>
+  <div class="entry"><span class="d">13 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Harbors:</b> world money markets join the board, India, China, the euro area, Japan and Korea, with Japan on daily prints.</span></div>
+  <div class="entry"><span class="d">12 Jul</span><span class="tag dim">SECURITY</span><span class="t"><b>Hardening sweep</b> across the stack: scoped trust boundaries, container hardening, dependency audit, tenancy audit. Details deliberately not itemized here.</span></div>
+  <div class="entry"><span class="d">12 Jul</span><span class="tag">SEICHE</span><span class="t"><b>The crypto record (Wrecks)</b> joins the free page and the PROOF tab: funding stress episodes, scored against what actually happened.</span></div>
+  <div class="entry"><span class="d">11 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>2025 cycle, out of sample:</b> a second replay tranche of 11 institutions on vetted primary data, no retuning. The resolution guard ships: managed recoveries no longer re rate upward.</span></div>
+  <div class="entry"><span class="d">11 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Reframed as a free public good:</b> support and grants welcome, a paywall never. The plain English guide becomes an in site page.</span></div>
+
+  <h2 class="month">July 2026 · week one</h2>
+  <div class="entry"><span class="d">10 Jul</span><span class="tag gold">RESEARCH</span><span class="t"><b>The rigor suite:</b> confidence intervals, threshold sweeps, ablations, null tests and a point in time audit run over the entire backtest.</span></div>
+  <div class="entry"><span class="d">10 Jul</span><span class="tag">RESEARCH</span><span class="t"><b>Crisis validation expands 7 → 36 institutions</b> with three cohort rigor: failed, stressed and healthy side by side.</span></div>
+  <div class="entry"><span class="d">10 Jul</span><span class="tag">DATA</span><span class="t"><b>Reference reconciliation:</b> the corpus checked against 244 published RBI Handbook tables with a dedicated harness.</span></div>
+  <div class="entry"><span class="d">10 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Methods tier one lands:</b> BIS style stress reads, Monte Carlo scenario engines, adaptive conformal intervals and a regime model, with the record auto anchored and a dead man alert on gaps.</span></div>
+  <div class="entry"><span class="d">10 Jul</span><span class="tag">SEICHE</span><span class="t"><b>Leak audit:</b> a one switch leakage protocol, run against our own pipeline before anyone else could.</span></div>
+  <div class="entry"><span class="d">09 Jul</span><span class="tag dim">SECURITY</span><span class="t"><b>Auth and throttles</b> across research routes and expensive public endpoints; the point in time ledger gets tenant scoped chains and a read only audit endpoint.</span></div>
+  <div class="entry"><span class="d">08 Jul</span><span class="tag">DATA</span><span class="t"><b>A decade of verified policy corridor data</b> and monthly operations prints join the corpus, with new public data scrapers on both the US and Indian sides.</span></div>
+  <div class="entry"><span class="d">06 Jul</span><span class="tag">RADAR</span><span class="t"><b>The validated signal suite wires into the lender API:</b> microfinance early warning with impact tiered recommended actions and maker checker discipline.</span></div>
+  <div class="entry"><span class="d">06 Jul</span><span class="tag red">SITE</span><span class="t"><b>Honesty pass:</b> claims that could not yet be defended were removed from the site. Present status stated plainly.</span></div>
+  <div class="entry"><span class="d">05 Jul</span><span class="tag dim">DEMO</span><span class="t"><b>demo.liquilens.in ships</b> behind an access gate.</span></div>
+  <div class="entry"><span class="d">03 Jul</span><span class="tag dim">SITE</span><span class="t"><b>liquilens.in launches:</b> brand suite, entity work and the first sourced statistics band with research citations.</span></div>
+
+  <h2 class="month">Late June 2026</h2>
+  <div class="entry"><span class="d">28 Jun</span><span class="tag">RADAR</span><span class="t"><b>Six research engines land</b> and the productization sprint begins: the stretch of work everything above sits on.</span></div>
+
+</div></section>
+
+<footer><div class="wrap">
+  © 2026 LiquiLens · <a href="/">the failure radar</a> · <a href="/research/">research</a> · <a href="/us/">the US bank layer</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, free and open source</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a>
+</div></footer>
+
+</body>
+</html>

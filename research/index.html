@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LiquiLens Research | The validation record, published</title>
+<meta name="description" content="Replays, studies and method notes from the LiquiLens desk and Seiche, our open funding stress terminal. 550 US bank failures, 48 Indian institutions, 7 European case files. Full confusion matrix, misses named.">
+<link rel="canonical" href="https://liquilens.in/research/">
+<meta property="og:title" content="LiquiLens Research">
+<meta property="og:description" content="The company is young. The record is 2004 to 2026. Replays, studies and method notes, misses included.">
+<meta property="og:image" content="https://liquilens.in/og-radar.png">
+<meta property="og:url" content="https://liquilens.in/research/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0A0F1C;--ink2:#0E1424;--card:#0F1526;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-0.02em;line-height:1.12}
+.serif em{font-style:italic;color:var(--gold);font-weight:400}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+nav{border-bottom:1px solid var(--line);padding:20px 0;position:sticky;top:0;background:rgba(10,15,28,.92);backdrop-filter:blur(10px);z-index:9}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-weight:600;font-size:18px}
+.brand:hover{text-decoration:none}
+.mark{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-family:'Fraunces',serif;font-weight:600;font-size:18px}
+.brand small{color:var(--muted2);font-weight:400;font-size:13px;margin-left:2px}
+.navlinks{display:flex;gap:22px;font-size:14.5px}
+.navlinks a{color:var(--muted)}.navlinks a:hover{color:var(--gold);text-decoration:none}
+header.hero{padding:88px 0 30px;background:radial-gradient(70% 90% at 80% 0%,rgba(227,183,120,.07),transparent 60%)}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--gold)}
+h1{font-size:clamp(38px,5.4vw,58px);margin:22px 0 18px}
+.lede{color:var(--muted);max-width:760px;font-size:18px}
+.lede b{color:var(--text);font-weight:600}
+.agejab{margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:14.5px;color:var(--muted2)}
+.agejab b{color:var(--gold);font-weight:500}
+section{padding:54px 0}
+h2.serif{font-size:clamp(28px,3.6vw,40px);margin:14px 0 10px}
+.sub{color:var(--muted);max-width:740px;margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 26px 22px;display:flex;flex-direction:column;gap:12px;transition:border-color .25s, transform .25s}
+.note:hover{border-color:#2A3554;transform:translateY(-2px)}
+.chiprow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;color:var(--teal);border:1px solid rgba(91,208,196,.35);border-radius:99px;padding:3px 11px}
+.chip.gold{color:var(--gold);border-color:rgba(227,183,120,.4)}
+.chip.red{color:var(--red);border-color:rgba(224,106,106,.4)}
+.when{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted2)}
+.note h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:24px;line-height:1.2}
+.note h3 em{font-style:italic;color:var(--gold);font-weight:400}
+.note p{color:var(--muted);font-size:15.5px}
+.note p b{color:var(--text);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin-top:2px}
+.stat{padding:2px 18px;border-left:1px solid var(--line)}
+.stat:first-child{padding-left:0;border-left:none}
+.stat b{display:block;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;color:var(--gold)}
+.stat span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase}
+.src{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted2);border-top:1px dashed var(--line);padding-top:12px;margin-top:auto}
+.src a{color:var(--muted)}
+.corro{border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;background:var(--ink2);padding:26px 30px;margin:8px 0 0}
+.corro .mono{font-size:12px;letter-spacing:.18em;color:var(--gold)}
+.corro p{color:var(--muted);margin-top:10px;max-width:860px}
+.corro p b{color:var(--text)}
+.withhold{border:1px solid var(--line);border-radius:14px;background:var(--ink2);padding:30px 32px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.withhold h3{font-family:'Fraunces',serif;font-weight:500;font-size:22px;margin-bottom:10px}
+.withhold ul{list-style:none;color:var(--muted);font-size:15px}
+.withhold li{padding:7px 0 7px 22px;position:relative;border-bottom:1px dashed var(--line)}
+.withhold li:last-child{border-bottom:none}
+.withhold .pub li::before{content:"✓";position:absolute;left:0;color:var(--teal);font-family:'IBM Plex Mono',monospace}
+.withhold .priv li::before{content:"·";position:absolute;left:2px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:22px;line-height:.9}
+.withhold p.why{grid-column:1/-1;color:var(--muted2);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+.withhold p.why b{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:34px 0 44px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted2)}
+footer a{color:var(--muted)}
+@media (max-width:760px){.withhold{grid-template-columns:1fr}.navlinks{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="/"><span class="mark">L</span>LiquiLens <small>research</small></a>
+  <span class="navlinks">
+    <a href="/">The radar</a>
+    <a href="/us/">US bank risk</a>
+    <a href="/ship-log/">Ship log</a>
+    <a href="https://seiche.info" target="_blank" rel="noopener">Seiche</a>
+    <a href="mailto:mrinal091997@liquilens.in?subject=Research">Contact</a>
+  </span>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Research · the record, written up</div>
+  <h1 class="serif">Measured, published, <em>misses included.</em></h1>
+  <p class="lede">Everything on this page is a study you can check: replays on public filings with the rules frozen before scoring, live studies served by the same API the product runs on, and method notes that say exactly what we withhold and why. <b>No claim here outruns its receipt.</b></p>
+  <p class="agejab">The company is young. <b>The record runs 2004 to 2026,</b> three banking systems, every date sourced.</p>
+</div></header>
+
+<section id="replays"><div class="wrap">
+  <div class="kicker">The replays</div>
+  <h2 class="serif">Three banking systems, <em>one frozen rule set.</em></h2>
+  <p class="sub">A failure engine you can only audit in one country is a story about that country. These are the three records, served by the public API, with the misses and false alarms printed beside the catches.</p>
+  <div class="grid">
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">BACKTESTED</span><span class="when">July 2026</span></div>
+      <h3>The United States: <em>550 failures, quarter by quarter</em></h3>
+      <p>Every FDIC insured bank scored point in time from free call report filings, 2004 to 2026. Weights were fixed before the first backtest ran, so the whole record is out of sample by construction. Both 2026 failures were on the watchlist more than a year before the FDIC arrived. The five misses of the 2023 to 2026 wave are named, and all five were fraud. Balance sheets cannot see embezzlement, so we say so.</p>
+      <div class="stats">
+        <div class="stat"><b>73.1%</b><span>recall (69.5 to 76.7)</span></div>
+        <div class="stat"><b>21.7 mo</b><span>median lead</span></div>
+        <div class="stat"><b>0.853</b><span>AUC</span></div>
+        <div class="stat"><b>9.7%</b><span>false positive rate</span></div>
+      </div>
+      <p>The trade off, stated as the product: roughly ten percent of the industry sits on watch to catch 73 percent of failures one to two years early. Precision 4.1 percent against a 0.83 percent base rate is a 5.0x lift, and we publish the entire confusion matrix because a warning system that never says how often it cries wolf is not a warning system.</p>
+      <p class="src">527,760 bank quarters · 9,903 institutions · free FDIC data end to end · <a href="/us/">the full US record →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">BACKTESTED</span><span class="when">July 2026</span></div>
+      <h3>India: <em>48 institutions, two decades</em></h3>
+      <p>Failed institutions, stressed survivors and healthy controls from vetted primary filings, banks and co-operatives next to NBFCs and microlenders, post default quarters walled off so nothing leaks from the future. 16 of 18 non fraud failures flagged at a <b>median lead of 21 months</b>, significant at p &lt; 0.001, discriminating at AUC 0.713 against healthy controls.</p>
+      <p>Both dials ship. Conservative mode caught 11 of 16 with zero false alarms on healthy books. Sensitive mode adds the funding lens and caught 16 of 18 at the price of three healthy names warned. A second, fully out of sample replay on the 2025 microfinance cycle covered 11 more institutions with no retuning.</p>
+      <div class="stats">
+        <div class="stat"><b>16 / 18</b><span>non fraud failures</span></div>
+        <div class="stat"><b>21 mo</b><span>median lead</span></div>
+        <div class="stat"><b>0</b><span>false alarms, cons. mode</span></div>
+      </div>
+      <p class="src">every dossier cited to primary filings · <a href="https://demo.liquilens.in" target="_blank" rel="noopener">the Evidence tab replays it live →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip gold">AUDITED</span><span class="when">July 2026</span></div>
+      <h3>Europe: <em>seven case files, no recalibration</em></h3>
+      <p>Northern Rock to Credit Suisse, replayed through the same lenses with nothing refit to the new market. Deliberately case studies rather than a cohort statistic, because seven collapses do not make a distribution. Every figure was audited against primary filings after the fact: <b>142 checked, 3 corrected in the open.</b> The corrections stayed in the record, because a record you can quietly fix is not a record.</p>
+      <div class="stats">
+        <div class="stat"><b>7</b><span>case files</span></div>
+        <div class="stat"><b>142</b><span>figures audited</span></div>
+        <div class="stat"><b>3</b><span>corrected, in public</span></div>
+      </div>
+      <p class="src">Northern Rock · Banco Popular · Credit Suisse and four more · <a href="/#validation">the validation record →</a></p>
+    </article>
+
+  </div>
+</div></section>
+
+<section id="studies" style="padding-top:10px"><div class="wrap">
+  <div class="kicker">Live studies</div>
+  <h2 class="serif">Findings the board <em>acts on today.</em></h2>
+  <p class="sub">Each of these started as a question, ran as a study on the replay corpus, and only then earned a place on the board. Layers that have not passed a pre registered study stay display only. That gate is the method.</p>
+  <div class="grid">
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">STUDY</span><span class="when">July 2026</span></div>
+      <h3>Deposit desperation: <em>the liability side talks first</em></h3>
+      <p>Banks that start reaching for deposits, paying up and growing brokered funding against the tide, are telling you something their asset side has not admitted yet. On the US corpus the reaching for deposits signal alone catches <b>64.7 percent of all failures</b>. Added to the score, recall rises from 72.0 to 75.5 percent at the same alarm budget, which is the honest way to state a lift: same number of alarms, more failures caught.</p>
+      <div class="stats">
+        <div class="stat"><b>64.7%</b><span>caught, signal alone</span></div>
+        <div class="stat"><b>72.0 → 75.5%</b><span>recall, same budget</span></div>
+      </div>
+      <p class="src">study on 550 failures, 2008 to 2026 · <a href="/us/">served on the US layer →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">WATCH</span><span class="when">July 2026</span></div>
+      <h3>NDFI exposure: <em>the $1.65 trillion side door</em></h3>
+      <p>US banks now lend about <b>$1.65 trillion to nondepository financial institutions</b>, private credit funds among them, and that exposure concentrates hard. We rank all 1,052 banks above one billion dollars in assets by NDFI lending against tier 1 capital. The top concentration runs at 5.64 times tier 1. The watch is display only by our own gate discipline: it states risk concentration, it does not yet move a score.</p>
+      <div class="stats">
+        <div class="stat"><b>$1.65T</b><span>bank lending to NDFIs</span></div>
+        <div class="stat"><b>1,052</b><span>banks ranked</span></div>
+        <div class="stat"><b>5.64x</b><span>top exposure vs tier 1</span></div>
+      </div>
+      <p class="src">from public call report schedules · <a href="/us/#ndfi">the NDFI watch →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">WATCH</span><span class="when">July 2026</span></div>
+      <h3>Stablecoin reserves: <em>everyone rates the coin, nobody scores the banks holding its cash</em></h3>
+      <p>In March 2023 USDC broke its peg not because of anything on chain, but because part of Circle's reserve cash sat at Silicon Valley Bank. That is a bank run risk problem wearing a crypto costume. We map which banks hold stablecoin reserve cash from citable public disclosures and join that map to the same failure engine that scores every other bank, for the era in which reserve custody is regulated business.</p>
+      <div class="stats">
+        <div class="stat"><b>1</b><span>depeg, bank caused</span></div>
+        <div class="stat"><b>every</b><span>custodian scored</span></div>
+      </div>
+      <p class="src">built from public disclosures only · <a href="/us/#reserves">the reserve custodian map →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip red">GATE CLOSED</span><span class="when">July 2026</span></div>
+      <h3>The monsoon study: <em>published because it failed</em></h3>
+      <p>Indian microlender repayments live and die with rural cash flows, so monsoon stress into loan stress is an obvious hypothesis. We ran it as a pre registered lift study on the crisis record, thresholds frozen before scoring. The result came back <b>below the bar, and the gate stayed closed</b>: monsoon data reads on the board as context and does not move any score. Publishing the negative result is the point. A research page with only wins is marketing.</p>
+      <div class="stats">
+        <div class="stat"><b>CLOSED</b><span>scoring gate</span></div>
+        <div class="stat"><b>context</b><span>only, on the board</span></div>
+      </div>
+      <p class="src">pre registered, thresholds frozen before scoring · <a href="/#world">the environment layer →</a></p>
+    </article>
+
+  </div>
+</div></section>
+
+<section id="seiche" style="padding-top:10px"><div class="wrap">
+  <div class="kicker">From the same desk · Seiche</div>
+  <h2 class="serif">The open terminal <em>publishes its own research.</em></h2>
+  <p class="sub">Seiche is our free, open source terminal for funding stress in the US money market. It watches the plumbing while LiquiLens watches the institutions, and everything below ships as AGPL code anyone can read, run and attack.</p>
+  <div class="grid">
+
+    <article class="note">
+      <div class="chiprow"><span class="chip gold">SEALED RECORD</span><span class="when">live since July 2026</span></div>
+      <h3>PROOF: <em>forecasts written down before the outcome</em></h3>
+      <p>The terminal publishes forward event odds on funding stress and then keeps the score, hits and misses both, on a sealed record. Entries are hash chained and anchored externally so the history cannot be quietly rewritten, and the scoreboard is served live on the site. This is the standard we think every early warning vendor should be held to, so we hold ourselves to it first, in public, on the hardest market there is.</p>
+      <div class="stats">
+        <div class="stat"><b>sealed</b><span>as published record</span></div>
+        <div class="stat"><b>live</b><span>scoreboard</span></div>
+      </div>
+      <p class="src">free, no sign in · <a href="https://seiche.info/#proof" target="_blank" rel="noopener">the PROOF scoreboard →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">RUNNING STUDY</span><span class="when">daily</span></div>
+      <h3>The dispatches: <em>plumbing leads price</em></h3>
+      <p>Every day the terminal writes a short dispatch on what the plumbing did, and the archive is quietly building a study: documented episodes where funding stress showed in repo operations and money market prints before it showed in price. When the strain tape catches one, the dispatch says so with the data attached. Reading the archive back to back is the closest thing we can offer to watching the thesis prove itself in real time.</p>
+      <div class="stats">
+        <div class="stat"><b>daily</b><span>published letter</span></div>
+        <div class="stat"><b>public</b><span>full archive</span></div>
+      </div>
+      <p class="src">every dispatch a static, linkable page · <a href="https://seiche.info" target="_blank" rel="noopener">read today's →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">METHODS</span><span class="when">July 2026</span></div>
+      <h3>The methods tier: <em>uncertainty you can audit</em></h3>
+      <p>The forecasting stack is built from methods with guarantees rather than vibes: conformal prediction for distribution free coverage with the coverage accounting done per regime, expert aggregation across interval forecasters, a calendar gated Hawkes process on the shock catalog, threshold free AUROC with permutation nulls for significance, and a one switch leakage audit we run against our own pipeline. All of it is in the open repository, so the claim is checkable at the code level.</p>
+      <div class="stats">
+        <div class="stat"><b>AGPL</b><span>all code public</span></div>
+        <div class="stat"><b>per regime</b><span>coverage accounting</span></div>
+      </div>
+      <p class="src">methods cited to their papers in the repo · <a href="https://github.com/beepboop2025/seiche" target="_blank" rel="noopener">read the source →</a></p>
+    </article>
+
+    <article class="note">
+      <div class="chiprow"><span class="chip">OBSERVATORY</span><span class="when">July 2026</span></div>
+      <h3>Harbors: <em>five money markets, one tide</em></h3>
+      <p>Dollar funding does not live alone. The terminal now watches five harbors, India, China, the euro area, Japan and Korea, from each market's own public prints, and estimates directional spillover between them so a reader can see which market is exporting stress and which is importing it. A dedicated view puts New York and Mumbai side by side, because that is the strait our two products share.</p>
+      <div class="stats">
+        <div class="stat"><b>5</b><span>markets watched</span></div>
+        <div class="stat"><b>directional</b><span>spillover map</span></div>
+      </div>
+      <p class="src">public central bank prints end to end · <a href="https://seiche.info" target="_blank" rel="noopener">open the terminal →</a></p>
+    </article>
+
+  </div>
+
+  <div class="corro" style="margin-top:26px">
+    <div class="mono">INDEPENDENT CORROBORATION</div>
+    <p><b>The thesis is not ours alone.</b> Correia, Luck and Verner, in work published through the Federal Reserve and MIT (arXiv 2602.07327), conclude that bank failures are predictable out of sample from public fundamentals, and that runs rarely kill healthy banks. That is the claim this entire desk is built on, reached independently, on their own data, by researchers with no stake in ours.</p>
+  </div>
+</div></section>
+
+<section id="withheld" style="padding-top:14px"><div class="wrap">
+  <div class="kicker">The line we hold</div>
+  <h2 class="serif">What we publish, <em>what we withhold.</em></h2>
+  <p class="sub">A research page should say both. The record is public because trust is the product. The recipe is not, for reasons we would rather state than have discovered.</p>
+  <div class="withhold">
+    <div class="pub">
+      <h3>Published, permanently</h3>
+      <ul>
+        <li>Every replay result above, with confidence intervals</li>
+        <li>The full confusion matrix, false alarms included</li>
+        <li>Every miss, named, with the reason it was missed</li>
+        <li>Corrections, made in the open and left visible</li>
+        <li>Negative results, like the closed monsoon gate</li>
+        <li>The as published score history, on a tamper evident ledger</li>
+        <li>Seiche, end to end, as AGPL open source</li>
+      </ul>
+    </div>
+    <div class="priv">
+      <h3>Withheld, deliberately</h3>
+      <ul>
+        <li>Signal definitions, weights and thresholds</li>
+        <li>Current scores of living institutions, never posted publicly</li>
+        <li>Lender book data, which never leaves a lender's systems</li>
+        <li>The feature engineering behind the engines</li>
+      </ul>
+    </div>
+    <p class="why"><b>Why this split:</b> screening survives on unpredictability. Publish the exact thresholds and the entities being screened can manage to them, which is how ratings became lagging indicators in the first place. And a living bank's name next to a score is a headline, not a screen. So the record proves the method works, and the method itself stays ours. Scores are screening percentiles from public filings, not verdicts and not advice.</p>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  © 2026 LiquiLens · <a href="/">the failure radar</a> · <a href="/us/">the US bank layer</a> · <a href="/ship-log/">ship log</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, free and open source</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a>
+</div></footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Research","url":"https://liquilens.in/research/","description":"Replays, live studies and method notes from LiquiLens and Seiche: 550 US bank failures, 48 Indian institutions, 7 European case files, full confusion matrix, misses named.","isPartOf":{"@type":"WebSite","url":"https://liquilens.in/"},"about":[{"@type":"Thing","name":"bank failure early warning"},{"@type":"Thing","name":"funding stress"},{"@type":"Thing","name":"point in time backtesting"}],"mainEntity":{"@type":"ItemList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"The United States: 550 failures, quarter by quarter","url":"https://liquilens.in/research/#replays"},
+{"@type":"ListItem","position":2,"name":"India: 48 institutions, two decades","url":"https://liquilens.in/research/#replays"},
+{"@type":"ListItem","position":3,"name":"Europe: seven case files, no recalibration","url":"https://liquilens.in/research/#replays"},
+{"@type":"ListItem","position":4,"name":"Deposit desperation: the liability side talks first","url":"https://liquilens.in/research/#studies"},
+{"@type":"ListItem","position":5,"name":"NDFI exposure: the $1.65 trillion side door","url":"https://liquilens.in/research/#studies"},
+{"@type":"ListItem","position":6,"name":"Stablecoin reserve custodians","url":"https://liquilens.in/research/#studies"},
+{"@type":"ListItem","position":7,"name":"The monsoon study: published because it failed","url":"https://liquilens.in/research/#studies"},
+{"@type":"ListItem","position":8,"name":"Seiche PROOF: forecasts written down before the outcome","url":"https://liquilens.in/research/#seiche"},
+{"@type":"ListItem","position":9,"name":"Seiche dispatches: plumbing leads price","url":"https://liquilens.in/research/#seiche"},
+{"@type":"ListItem","position":10,"name":"Seiche methods tier: uncertainty you can audit","url":"https://liquilens.in/research/#seiche"},
+{"@type":"ListItem","position":11,"name":"Harbors: five money markets, one tide","url":"https://liquilens.in/research/#seiche"}
+]}}
+</script>
+</body>
+</html>
