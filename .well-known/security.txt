@@ -1,0 +1,8 @@
+Contact: https://liquilens.in/#contact
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://liquilens.in/.well-known/security.txt
+Policy: https://liquilens.in/#contact
+
+# LiquiLens runs a public, free, read-only data API. Responsible
+# disclosure of any security issue is welcome via the contact above.
