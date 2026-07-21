@@ -1,729 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
-<meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>LiquiLens Undertow | The cross market liquidity map</title>
-<meta name="description" content="LiquiLens Undertow watches market liquidity itself: where it is deficient, where it is in surplus, who actually provides it, and whether it will still be there when you need to exit. The same engine that scores failing lenders, pointed at the markets they trade in. Every reading published on a dated, hash chained record." />
-<link rel="canonical" href="https://liquilens.in/undertow/" />
-<meta name="robots" content="index, follow, max-image-preview:large" />
-<meta name="theme-color" content="#0A0F1C" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235BD0C4'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%23071018' text-anchor='middle'%3EU%3C/text%3E%3C/svg%3E" />
-
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://liquilens.in/undertow/" />
-<meta property="og:site_name" content="LiquiLens" />
-<meta property="og:title" content="LiquiLens Undertow | Will the liquidity be there when you exit?" />
-<meta property="og:description" content="A cross market liquidity board from public data: dealer capacity, auction demand, order book depth, funding regime. Plus the first public map of who actually carries ETF liquidity. Honest cells, published record." />
-<meta property="og:image" content="https://liquilens.in/og-radar.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="LiquiLens Undertow | The cross market liquidity map" />
-<meta name="twitter:description" content="One banking group carries 30.6% of mapped ETF primary market flow. The median fund runs half its flow through a single firm. Nobody published this map before." />
-<meta name="twitter:image" content="https://liquilens.in/og-radar.png" />
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://liquilens.in/undertow/#page",
-      "url": "https://liquilens.in/undertow/",
-      "name": "LiquiLens Undertow: the cross market liquidity map",
-      "isPartOf": { "@id": "https://liquilens.in/#site" },
-      "about": { "@id": "https://liquilens.in/#org" },
-      "datePublished": "2026-07-17",
-      "dateModified": "2026-07-17"
-    },
-    {
-      "@type": "Dataset",
-      "name": "LiquiLens Undertow ETF liquidity backbone map",
-      "description": "The public map of who provides ETF primary market liquidity, built from SEC N-CEN filings: 4.64 trillion dollars of create and redeem flow across 1,009 funds and 160 trusts, resolved to parent complexes. Concentration published per fund and per provider.",
-      "url": "https://liquilens.in/undertow/",
-      "creator": { "@id": "https://liquilens.in/#org" },
-      "isBasedOn": "https://www.sec.gov/cgi-bin/browse-edgar",
-      "temporalCoverage": "2025-06-01/2026-07-17"
-    }
-  ]
-}
-</script>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Undertow — the cross-market liquidity map</title>
+<meta name="description" content="Forward liquidity, honestly scored. Cross-market board with a China basin row and a hash-chained as-published record. Not investment advice.">
+<link rel="canonical" href="https://liquilens.in/undertow/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Undertow · by LiquiLens">
+<meta property="og:title" content="Undertow — the cross-market liquidity map">
+<meta property="og:description" content="Who provides liquidity, how fragile they are, and what your exit costs — with a hash-chained record you can audit. Free tier row; ⭐ retail ~$29/mo; attested agent feed from $0.05/call.">
+<meta property="og:url" content="https://liquilens.in/undertow/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Undertow — the cross-market liquidity map">
+<meta name="twitter:description" content="Who provides liquidity, how fragile they are, and what your exit costs — with a hash-chained record you can audit. Not investment advice.">
 <style>
-  :root{
-    --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
-    --line:#1E2740; --line-2:#283354;
-    --current:#5BD0C4; --current-dim:rgba(91,208,196,.13);
-    --depth:#7FA8DC; --depth-dim:rgba(127,168,220,.12);
-    --gold:#E3B778;
-    --strain:#D99274; --red:#E07070;
-    --text:#E9EBF2; --muted:#8B94AB; --muted-2:#5C657E;
-    --serif:'Fraunces',Georgia,serif;
-    --sans:'Inter',system-ui,sans-serif;
-    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,monospace;
-    --maxw:1120px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  :focus-visible{outline:2px solid var(--current);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-
-  /* ---------- ticker: faster than home, water palette ---------- */
-  .ticker{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0C1322,#0A0F1C);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);position:sticky;top:0;z-index:50}
-  .ticker__track{display:inline-block;padding:10px 0;animation:tk 16s linear infinite}
-  .ticker:hover .ticker__track{animation-play-state:paused}
-  .ticker__track span{padding:0 24px}
-  .ticker .hot{color:var(--current)}
-  .ticker .warm{color:var(--strain)}
-  @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
-  .brand{font-family:var(--serif);font-size:20px;letter-spacing:.02em}
-  .brand b{color:var(--gold)}
-  .brand .u{color:var(--current);font-family:var(--mono);font-size:13px;margin-left:10px;letter-spacing:.14em}
-  .nav-link{font-family:var(--mono);font-size:13px;color:var(--muted);transition:.2s}
-  .nav-link:hover{color:var(--current)}
-
-  /* ---------- hero ---------- */
-  .hero{padding:36px 0 0}
-  .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--current)}
-  h1{font-family:var(--mono);font-weight:600;font-size:clamp(26px,4.4vw,46px);line-height:1.18;letter-spacing:-.02em;margin:20px 0 6px;max-width:900px}
-  h1 .dim{color:var(--muted)}
-  h1 .cur{color:var(--current)}
-  .thesis{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2vw,21px);color:var(--muted);margin:14px 0 8px;max-width:760px}
-  .stamp{font-family:var(--mono);font-size:12px;color:var(--muted-2)}
-  .stamp .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--current);margin-right:7px;vertical-align:1px;animation:pulse 2.2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-
-  /* the current: streaming depth canvas */
-  .current-wrap{position:relative;margin-top:26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0B1120,#0A0F1C)}
-  #bookCanvas{display:block;width:100%;height:230px}
-  .current-legend{position:absolute;top:10px;left:28px;font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.08em}
-  .current-legend b{color:var(--depth);font-weight:500}
-  .current-legend i{color:var(--current);font-style:normal}
-  .current-event{position:absolute;top:10px;right:28px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--red);opacity:0;transition:opacity .5s}
-  .current-event.on{opacity:1}
-  .current-note{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);padding:9px 28px;border-top:1px dashed var(--line)}
-  .current-note b{color:var(--muted)}
-
-  .band{padding:66px 0;border-top:1px solid var(--line)}
-  h2{font-family:var(--mono);font-weight:600;font-size:clamp(21px,2.6vw,28px);letter-spacing:-.01em;margin-bottom:10px}
-  .lede{font-size:17px;color:var(--muted);max-width:780px}
-
-  /* ---------- board: rows with live stress bars ---------- */
-  .brd{margin-top:26px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--ink-2)}
-  .brd-row{display:grid;grid-template-columns:150px 110px 1fr;gap:0;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line)}
-  .brd-row:last-child{border-bottom:none}
-  .brd-seg{font-family:var(--mono);font-size:14px}
-  .tier{display:inline-block;padding:3px 11px;border-radius:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em}
-  .t-normal{background:rgba(91,208,196,.12);color:var(--current)}
-  .t-partial{background:rgba(139,148,171,.13);color:var(--muted)}
-  .t-unavail{background:rgba(224,112,112,.11);color:var(--red)}
-  .t-strain{background:rgba(217,146,116,.16);color:var(--strain);animation:pulse 2.6s ease-in-out infinite}
-  .brd-detail{min-width:0}
-  .brd-bar{position:relative;height:7px;border-radius:4px;background:var(--ink-3);overflow:hidden;margin-bottom:8px}
-  .brd-bar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px;background:linear-gradient(90deg,var(--depth),var(--current));transition:width 1.4s cubic-bezier(.22,.9,.35,1)}
-  .brd-bar em{position:absolute;top:-3.5px;width:2px;height:14px;background:var(--strain);opacity:0;transition:opacity .6s .9s}
-  .brd-row.lit .brd-bar em{opacity:1}
-  .brd-txt{font-size:13.5px;color:var(--muted);line-height:1.55}
-  .brd-txt b{color:var(--text);font-weight:600}
-  .brd-cap{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);padding:12px 22px;background:var(--ink);border-top:1px dashed var(--line)}
-  @media(max-width:720px){.brd-row{grid-template-columns:1fr;gap:8px}}
-
-  /* ---------- backbone: flow bar + counters ---------- */
-  .flow{margin-top:28px}
-  .flow-bar{display:flex;height:56px;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);position:relative}
-  .flow-seg{position:relative;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11.5px;color:#071018;white-space:nowrap;overflow:hidden;min-width:0;transition:filter .2s}
-  .flow-seg:hover{filter:brightness(1.18)}
-  .flow-seg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(100deg,rgba(255,255,255,.12) 0 8px,transparent 8px 26px);animation:drift 2.8s linear infinite}
-  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(26px)}}
-  .flow-lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:8px}
-  .cardrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:26px}
-  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:22px;transition:transform .25s,border-color .25s}
-  .card:hover{transform:translateY(-3px);border-color:var(--current)}
-  .card .big{font-family:var(--mono);font-weight:600;font-size:36px;color:var(--current);line-height:1.05;letter-spacing:-.02em}
-  .card .lab{font-family:var(--sans);font-size:13.5px;color:var(--muted);margin-top:9px;line-height:1.5}
-  .note{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--current);border-radius:0 10px 10px 0;padding:16px 20px;color:var(--muted);font-size:14.5px;margin-top:24px;max-width:840px}
-  .note b{color:var(--text)}
-
-  /* ---------- retail: the live desk ---------- */
-  .rt-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px;margin-top:26px}
-  @media(max-width:860px){.rt-grid{grid-template-columns:1fr}}
-  .rt-panel{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:24px}
-  .rt-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-  .rt-title{font-family:var(--mono);font-weight:600;font-size:15px}
-  .rt-asof{font-family:var(--mono);font-size:11px;color:var(--muted-2)}
-  .rt-toggle{display:flex;gap:6px;flex-wrap:wrap}
-  .rt-toggle button{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--muted);background:var(--ink-3);border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.2s}
-  .rt-toggle button:hover{color:var(--text)}
-  .rt-toggle button.on{color:var(--current);border-color:var(--current);background:var(--current-dim)}
-  .rt-venues{margin-top:16px;display:grid;gap:9px}
-  .rt-venue{display:grid;grid-template-columns:96px 1fr 84px;gap:12px;align-items:center;font-family:var(--mono);font-size:12.5px}
-  .rt-venue .nm{color:var(--muted);overflow:hidden;text-overflow:ellipsis}
-  .rt-venue .track{height:8px;border-radius:4px;background:var(--ink-3);overflow:hidden}
-  .rt-venue .track i{display:block;height:100%;border-radius:4px;width:0;background:linear-gradient(90deg,var(--depth),var(--current));transition:width 1.1s cubic-bezier(.22,.9,.35,1)}
-  .rt-venue.best .track i{background:var(--current)}
-  .rt-venue.worst .track i{background:linear-gradient(90deg,var(--strain),var(--red))}
-  .rt-venue .bp{text-align:right;color:var(--text)}
-  .rt-venue.best .bp{color:var(--current)}
-  .rt-venue.worst .bp{color:var(--red)}
-  .rt-line{font-size:13.5px;color:var(--muted);margin-top:16px;line-height:1.6}
-  .rt-line b{color:var(--text)}
-  .rt-refusal{font-family:var(--mono);font-size:12.5px;color:var(--strain);margin-top:14px}
-  .rt-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:24px}
-  .rt-stat .big{font-family:var(--mono);font-weight:600;font-size:26px;color:var(--current);letter-spacing:-.02em}
-  .rt-stat .big.warm{color:var(--strain)}
-  .rt-stat .lab{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
-  .tg-btn{display:flex;align-items:center;gap:13px;border:1px solid var(--line-2);background:var(--ink-3);border-radius:11px;padding:14px 16px;margin-top:10px;transition:.2s}
-  .tg-btn:hover{border-color:var(--current);transform:translateY(-2px)}
-  .tg-btn .ic{font-size:17px;flex-shrink:0}
-  .tg-btn .t{font-family:var(--mono);font-size:13px;color:var(--text)}
-  .tg-btn .s{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
-  .tg-qr{display:flex;gap:16px;align-items:center;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
-  .tg-qr img{width:86px;height:86px;border-radius:9px;background:#fff;padding:5px}
-  .tg-qr p{font-size:12px;color:var(--muted);line-height:1.6}
-  .tg-qr .mono{font-family:var(--mono);color:var(--current)}
-  .rt-calls{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:16px;line-height:1.8}
-  .rt-calls b{color:var(--text)}
-  .rt-tiers{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .rt-tiers .tier{cursor:default}
-
-  /* ---------- method: deliberately still ---------- */
-  .still{background:var(--ink-2)}
-  .still .kicker{color:var(--gold)}
-  .still h2{font-family:var(--serif);font-weight:600;letter-spacing:0}
-  .still-line{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,24px);color:var(--text);margin:6px 0 26px}
-  .still-line b{color:var(--gold);font-style:normal}
-  ul.plain{list-style:none;max-width:840px}
-  ul.plain li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--muted);font-size:15px}
-  ul.plain li b{color:var(--text);font-weight:600}
-
-  .cta{display:inline-block;font-family:var(--mono);font-size:14px;color:#071018;background:var(--current);padding:13px 24px;border-radius:9px;margin-top:22px;transition:.2s}
-  .cta:hover{background:#7fe0d6;transform:translateY(-1px)}
-  footer{padding:40px 0 60px;color:var(--muted-2);font-family:var(--mono);font-size:12.5px}
-  footer a{color:var(--muted)}
-
-  /* reveals */
-  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
-  .rv.in{opacity:1;transform:none}
-
-  @media (prefers-reduced-motion: reduce){
-    .ticker__track,.flow-seg::after,.t-strain,.stamp .dot{animation:none}
-    .rv{opacity:1;transform:none;transition:none}
-    .brd-bar i{transition:none}
-    .card{transition:none}
-  }
+  :root { --bg:#0B1220; --panel:#111A2E; --line:#1E293B; --text:#E2E8F0;
+          --faint:#94A3B8; --blue:#38BDF8; --amber:#F59E0B; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text);
+         font:17px/1.65 Georgia,'Times New Roman',serif; }
+  .wrap { max-width:960px; margin:0 auto; padding:0 24px; }
+  header { padding:88px 0 56px; border-bottom:1px solid var(--line); }
+  .kicker { color:var(--amber); letter-spacing:.18em; font-size:13px;
+            text-transform:uppercase; font-family:ui-monospace,Menlo,monospace; }
+  h1 { font-size:clamp(30px,5vw,46px); line-height:1.15; margin:14px 0 18px; }
+  .sub { color:var(--faint); font-size:20px; max-width:44em; }
+  h2 { font-size:26px; margin:0 0 18px; }
+  section { padding:56px 0; border-bottom:1px solid var(--line); }
+  .cards { display:flex; gap:16px; flex-wrap:wrap; }
+  .card { flex:1 1 260px; background:var(--panel); border:1px solid var(--line);
+          border-radius:10px; padding:22px; }
+  .card h3 { font-size:18px; color:var(--blue); margin-bottom:10px; }
+  .card p { color:var(--faint); font-size:15.5px; }
+  .honest { background:var(--panel); border-left:4px solid var(--amber);
+            border-radius:0 10px 10px 0; padding:22px 26px; }
+  .honest p { margin:8px 0; color:var(--faint); }
+  .honest strong { color:var(--text); }
+  .offer { text-align:center; }
+  .price { font-size:40px; color:var(--amber); font-weight:bold; margin:10px 0 2px; }
+  .strike { color:var(--faint); text-decoration:line-through; font-size:19px; }
+  .btn { display:inline-block; margin:26px 0 8px; padding:15px 34px;
+         background:var(--blue); color:#06121F; font-weight:bold;
+         border-radius:8px; text-decoration:none; font-size:18px; }
+  .btn:hover { background:#7DD3FC; }
+  .tiny { color:var(--faint); font-size:14px; }
+  .mono { font-family:ui-monospace,Menlo,monospace; font-size:14px;
+          color:var(--blue); word-break:break-all; }
+  .tier { display:flex; gap:16px; flex-wrap:wrap; }
+  .tier .card strong { color:var(--amber); }
+  dl dt { color:var(--blue); font-weight:bold; margin-top:20px; }
+  dl dd { color:var(--faint); margin-top:6px; }
+  footer { padding:40px 0 60px; color:var(--faint); font-size:14px; }
+  ul.plain { list-style:none; }
+  ul.plain li { padding:7px 0 7px 26px; position:relative; color:var(--faint); }
+  ul.plain li::before { content:"—"; position:absolute; left:0; color:var(--amber); }
 </style>
 </head>
 <body>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track" id="tk">
-    <span class="half"><span class="hot">UNDERTOW</span><span>cross market liquidity, read live</span><span>dealer UST inventories <b class="warm">97.6th pctl of 13y</b></span><span>corporate settlement fails <b class="warm">96.6th pctl</b></span><span>funding overlay <b class="warm">STRAIN</b> via Seiche</span><span>ETF flow mapped <b class="hot">$4.64T</b></span><span>one banking group <b class="hot">30.6%</b> of the plumbing</span><span>median fund <b class="hot">49.9%</b> single provider</span><span>retail desk live in Telegram <b class="hot">@undertow_LiquiLens_bot</b></span><span>every reading on a hash chained record</span></span><span class="half"><span class="hot">UNDERTOW</span><span>cross market liquidity, read live</span><span>dealer UST inventories <b class="warm">97.6th pctl of 13y</b></span><span>corporate settlement fails <b class="warm">96.6th pctl</b></span><span>funding overlay <b class="warm">STRAIN</b> via Seiche</span><span>ETF flow mapped <b class="hot">$4.64T</b></span><span>one banking group <b class="hot">30.6%</b> of the plumbing</span><span>median fund <b class="hot">49.9%</b> single provider</span><span>retail desk live in Telegram <b class="hot">@undertow_LiquiLens_bot</b></span><span>every reading on a hash chained record</span></span>
-  </div>
-</div>
-
-<div class="wrap">
-  <nav>
-    <a class="brand" href="/">Liqui<b>Lens</b><span class="u">UNDERTOW</span></a>
-    <span>
-      <a class="nav-link" href="/us/">US bank risk</a>
-      <a class="nav-link" href="#retail" style="margin-left:20px">Retail desk</a>
-      <a class="nav-link" href="/#desk" style="margin-left:20px">Seiche</a>
-      <a class="nav-link" href="#access" style="margin-left:20px">Early access</a>
-    </span>
-  </nav>
-</div>
-
-<header class="hero">
+<header>
   <div class="wrap">
-    <span class="kicker">the cross market liquidity map</span>
-    <h1>Everyone measures what trading costs <span class="dim">today</span>.<br/>We watch whether the market will <span class="cur">still be there</span> when you need to leave.</h1>
-    <p class="thesis">Liquidity is the one input every strategy assumes and no vendor watches forward. Undertow reads only public data and maps where liquidity is thin, where it is in surplus, who provides it, and how fast it is being withdrawn.</p>
-    <p class="stamp"><span class="dot"></span>every reading below is committed to a dated, hash chained record before anyone can know how it ages</p>
-  </div>
-  <div class="current-wrap" aria-label="Animated illustration: an order book streaming past, with periodic liquidity withdrawal events where depth visibly evaporates">
-    <canvas id="bookCanvas"></canvas>
-    <div class="current-legend"><b>asks</b> above · <i>bids</i> below · streaming at market speed</div>
-    <div class="current-event" id="evLabel">liquidity withdrawal in progress</div>
-    <div class="current-note"><b>what you are watching:</b> a depth of book streaming past. Every few seconds the depth evaporates and refills. That evaporation is the risk this product measures. Illustration, not live data; the live board is below.</div>
+    <div class="kicker">Undertow · by LiquiLens</div>
+    <h1>Everyone sells what liquidity costs today.<br>We watch whether it will still be there.</h1>
+    <p class="sub">A cross-market liquidity map — Treasuries, credit, equities,
+    ETFs, FX, crypto, and the China basin nobody else carries — fused from
+    primary public data, with a hash-chained record of every call we publish.
+    Including the wrong ones.</p>
   </div>
 </header>
 
-<section class="band" id="board">
+<section>
   <div class="wrap">
-    <span class="kicker">the board · first public reading · 17 july 2026</span>
-    <h2>Where liquidity stands, segment by segment</h2>
-    <p class="lede">Each scored segment blends at least two independent measures, each ranked against its own full history. The bar is the blended stress percentile. The orange tick marks the hottest component inside the blend, because a calm average can hide a loaded spring.</p>
-
-    <div class="brd" id="brd">
-      <div class="brd-row" data-bar="51" data-tick="97.6">
-        <span class="brd-seg">US Treasuries</span>
-        <span><span class="tier t-normal">NORMAL</span></span>
-        <div class="brd-detail"><div class="brd-bar"><i></i><em></em></div>
-        <div class="brd-txt"><b>0.51 blended</b>, but dealer coupon inventories sit at the <b>97.6th percentile of 13 years</b> and bill auction demand is soft. The shock absorber is already loaded.</div></div>
-      </div>
-      <div class="brd-row" data-bar="43" data-tick="96.6">
-        <span class="brd-seg">IG credit</span>
-        <span><span class="tier t-normal">NORMAL</span></span>
-        <div class="brd-detail"><div class="brd-bar"><i></i><em></em></div>
-        <div class="brd-txt"><b>0.43 blended</b>, spreads calm, yet corporate settlement fails run at the <b>96.6th percentile</b>. Plumbing friction the spread does not show.</div></div>
-      </div>
-      <div class="brd-row" data-bar="0" data-strain="1">
-        <span class="brd-seg">Funding overlay</span>
-        <span><span class="tier t-strain">STRAIN</span></span>
-        <div class="brd-detail">
-        <div class="brd-txt">Live regime from <a href="https://seiche.info" style="color:var(--current)">Seiche</a>, our open funding terminal. Funding stress is where market liquidity goes to die first.</div></div>
-      </div>
-      <div class="brd-row" data-bar="0">
-        <span class="brd-seg">HY credit</span>
-        <span><span class="tier t-partial">PARTIAL</span></span>
-        <div class="brd-detail"><div class="brd-txt">One qualifying measure. Our rule needs two before we score a cell, so this cell stays unscored and says so.</div></div>
-      </div>
-      <div class="brd-row" data-bar="0">
-        <span class="brd-seg">Equities</span>
-        <span><span class="tier t-partial">PARTIAL</span></span>
-        <div class="brd-detail"><div class="brd-txt">Proxy measure only today. Price impact measures land next.</div></div>
-      </div>
-      <div class="brd-row" data-bar="0">
-        <span class="brd-seg">Crypto</span>
-        <span><span class="tier t-partial">PARTIAL</span></span>
-        <div class="brd-detail"><div class="brd-txt">Live order book depth is being recorded right now. Scores start when sixty observations of real history exist, not before.</div></div>
-      </div>
-      <div class="brd-row" data-bar="0">
-        <span class="brd-seg">FX majors</span>
-        <span><span class="tier t-unavail">UNAVAILABLE</span></span>
-        <div class="brd-detail"><div class="brd-txt">No free measure meets our bar. We say so rather than fake it.</div></div>
-      </div>
-      <div class="brd-cap">the unscored cells are the point. a board that admits what it cannot measure is the only kind whose scored cells deserve belief.</div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="backbone">
-  <div class="wrap rv">
-    <span class="kicker">the backbone · nobody published this map before</span>
-    <h2>Who actually carries ETF liquidity</h2>
-    <p class="lede">Every ETF must report, once a year, which firms did its create and redeem work and for how many dollars. We collected those filings across 160 trusts, resolved every trading name to its parent, and mapped 4.64 trillion dollars of primary market flow. Hover the stream: each channel is one parent firm, sized by its true share.</p>
-
-    <div class="flow">
-      <div class="flow-bar" id="flowBar" role="img" aria-label="Share of mapped ETF primary market flow by parent firm: Bank of America 30.6%, Goldman Sachs 13.1%, JPMorgan 9.8%, ABN AMRO 8.8%, Morgan Stanley 6.5%, Barclays 4.7%, Jane Street 4.2%, all others 22.3%"></div>
-      <div class="flow-lab"><span>$4.64T of create and redeem flow, latest annual filings</span><span>one bar = the whole US ETF primary market</span></div>
-    </div>
-
-    <div class="cardrow">
-      <div class="card rv"><div class="big" data-count="30.6" data-suffix="%">0%</div><div class="lab">of all mapped flow runs through one banking group, Bank of America, across 831 funds</div></div>
-      <div class="card rv"><div class="big" data-count="49.9" data-suffix="%">0%</div><div class="lab">the median fund routes half its primary market flow through a single parent firm</div></div>
-      <div class="card rv"><div class="big" data-count="3" data-suffix=" firms">0</div><div class="lab">carry 99.9% of the flow behind BND, a thirty billion dollar a year bond ETF held in millions of retirement accounts</div></div>
-      <div class="card rv"><div class="big" data-count="700" data-suffix=" funds">0</div><div class="lab">depend on one trading firm, Jane Street, for breadth. Banks carry the depth, one firm carries the long tail</div></div>
-    </div>
-    <div class="note"><b>Why it matters:</b> when a single provider steps back, this map says exactly which funds feel it first. India saw the live version in July 2025 when one firm was barred and options volumes visibly sagged. We can now draw that scenario, fund by fund, for the US market.</div>
-  </div>
-</section>
-
-<section class="band" id="retail">
-  <div class="wrap rv">
-    <span class="kicker">the retail desk · live from the published packs</span>
-    <h2>What does it cost to LEAVE, at your size?</h2>
-    <p class="lede">The board above is the institutional read. This is the retail door: one day sell cost per venue at sizes from a thousand dollars to a million, from live order books, refreshed with every published pack. The numbers below are fetched from the same hash chained record the desk publishes. When the pack cannot answer, this section says so instead of showing yesterday dressed as today.</p>
-
-    <div class="rt-grid">
-      <div class="rt-panel">
-        <div class="rt-head">
-          <span class="rt-title">Exit cost per venue</span>
-          <span class="rt-toggle" id="rtAsset">
-            <button class="on" data-a="BTC">BTC</button>
-            <button data-a="ETH">ETH</button>
-          </span>
-          <span class="rt-toggle" id="rtSize"></span>
-          <span class="rt-asof" id="rtAsof">reading the published pack…</span>
-        </div>
-        <div class="rt-venues" id="rtVenues"></div>
-        <p class="rt-refusal" id="rtRefusal" hidden></p>
-        <p class="rt-line" id="rtBest"></p>
-        <div class="rt-stats" id="rtStats"></div>
-        <p class="rt-line" style="font-size:12px;color:var(--muted-2)">Calm conditioned, from live order books. A stressed exit costs more, and the method says so instead of guessing. When a size exceeds the observed book, the refusal is the reading.</p>
-        <div class="rt-tiers" id="rtTiers"></div>
-        <p class="rt-calls" id="rtCalls"></p>
-      </div>
-
-      <div class="rt-panel">
-        <div class="rt-head"><span class="rt-title">This desk lives in Telegram</span></div>
-        <p class="rt-line" style="margin-top:0">A full Mini App: the live board, image cards you can forward, per venue exit costs, and a ping the moment a tier flips. Free tier, no sign in.</p>
-        <a class="tg-btn" href="https://t.me/undertow_LiquiLens_bot?startapp=site" rel="noopener">
-          <span class="ic">▸</span>
-          <span><span class="t">Launch the Mini App</span><br/><span class="s">the full board inside Telegram. Add it to your home screen.</span></span>
-        </a>
-        <a class="tg-btn" href="https://t.me/undertow_LiquiLens_bot" rel="noopener">
-          <span class="ic">◈</span>
-          <span><span class="t">Open @undertow_LiquiLens_bot</span><br/><span class="s">/snap image cards · /crypto exit desk · /map depth heatmap · /calls the sealed record</span></span>
-        </a>
-        <a class="tg-btn" href="https://t.me/undertow_LiquiLens_bot?start=alerts_site" rel="noopener">
-          <span class="ic">⚡</span>
-          <span><span class="t">Get flip alerts</span><br/><span class="s">/watch sends a ping the moment a tier or the funding regime flips</span></span>
-        </a>
-        <div class="tg-qr">
-          <img src="bot-qr.png" alt="QR code that opens the Undertow Telegram bot" width="86" height="86" loading="lazy" />
-          <p>Scan from your phone. Typing <span class="mono">@undertow_LiquiLens_bot</span> in any chat drops a live card there. Inline mode is on.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="ladder">
-  <div class="wrap rv">
-    <span class="kicker">start where you are</span>
-    <h2>The desk, priced like a tool, not a terminal</h2>
-    <p class="lede">Every tier reads from the same hash chained record — the free tier is the proof, not a teaser. Crypto readings are young and labeled <i>accruing</i> until they clear 60 observations of their own published history; absence of data is never rendered as calm.</p>
-    <div class="cardrow">
+    <h2>What you get</h2>
+    <div class="cards">
       <div class="card">
-        <div class="big">$0</div>
-        <div class="lab"><b>Free — the proof.</b> The board's tier row, the BTC exit cost desk, the depth map, and the public sealed calls record. No sign in. <a href="https://t.me/undertow_LiquiLens_bot" rel="noopener">Open the bot</a> — /trial gives 7 days full, no card.</div>
+        <h3>The board</h3>
+        <p>One tier per market segment — DEFICIENT / STRAINED / NORMAL /
+        SURPLUS — from independent public measures: dealer positioning,
+        spreads, depth, auction digestion, funding regime overlay. Delivered
+        in Telegram and by API, rebuilt twice each trading day.</p>
       </div>
       <div class="card">
-        <div class="big">⭐≈$29<span style="font-size:16px">/mo</span></div>
-        <div class="lab"><b>Retail — the desk.</b> Everything in free, plus the ETH desk, the venue failure scenario S(−1), instant alerts when YOUR exit narrows, and seal your own calls — a hash chained, post quantum signed track record nobody, including us, can backdate or delete. 2,222 Telegram Stars (buy on desktop or web; app stores mark Stars up ~30%). /subscribe in the bot, cancel anytime.</div>
+        <h3>The China row</h3>
+        <p>Thirteen instrument families no terminal bundles: the SHIBOR−repo
+        stress spread, the PBOC fix gap, the CNH squeeze thermometer and the
+        forward wedge that prices the <em>next</em> squeeze, the Yiwu advance
+        channel, and twenty ports &amp; industrial zones read from Sentinel-1
+        radar and VIIRS night lights — immune to anyone's reporting choices.</p>
       </div>
       <div class="card">
-        <div class="big">$149–299<span style="font-size:16px">/mo</span></div>
-        <div class="lab"><b>Small desk — 1–10 people.</b> Every asset at full fidelity, scenario detail behind every number, and the attested data feed for your systems — the same point in time, offline verifiable record, droppable into your own compliance trail. /desk in the bot.</div>
+        <h3>The record</h3>
+        <p>Every published board lands in an append-only, hash-chained
+        point-in-time ledger committed to version control. Nobody — including
+        us — can quietly rewrite a bad month. Your quants audit the misses,
+        not our marketing.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band still" id="method">
+<section>
   <div class="wrap">
-    <span class="kicker">the method · borrowed from the failure radar</span>
-    <p class="still-line">Markets move fast. <b>The record does not.</b></p>
-    <h2>Part of the LiquiLens engine, pointed at a new field</h2>
-    <p class="lede" style="margin-bottom:10px">The discipline that flags a dying lender years early works just as well on the markets those lenders trade in. Same lab, same record keeping, new field. This is the one section of this page that does not move, on purpose.</p>
-    <ul class="plain">
-      <li><b>Public data only.</b> SEC filings, NY Fed dealer statistics, Treasury auction results, FRED, live order books. If a reading cannot be reproduced from free sources, it does not ship.</li>
-      <li><b>Point in time, always.</b> Every reading carries the date the data described, the date it was publicly knowable, and the date we published. Historical joins are honest by construction.</li>
-      <li><b>A tamper evident record.</b> Publications are immutable, corrections are new dated revisions with stated reasons, and every release is committed to a hash chain. Ask any vendor for the hash of what they told you last quarter.</li>
-      <li><b>Published misses.</b> Rules are registered before fitting. Failed studies are published, not retuned. This is the same practice behind the failure radar's validation record.</li>
-      <li><b>Screens, not advice.</b> Undertow tells you where to look and how fragile the ground is. It does not tell you what to trade.</li>
+    <h2>The honesty rules</h2>
+    <div class="honest">
+      <p><strong>No score without history.</strong> A measure earns a
+      percentile only after 60 observations of its own published record.
+      Below that it says <em>accruing</em> — a young percentile is noise, and
+      "no data" must never render as "all calm".</p>
+      <p><strong>No claim without a paper.</strong> Every instrument traces
+      to published research — twenty-plus citations, arXiv IDs on request —
+      verified against the PDFs, not the abstracts.</p>
+      <p><strong>No record without misses.</strong> Pre-registered event
+      replays, published either way. The 2013 Shibor Shock and the 2015
+      devaluation are on the docket, not in the brochure.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Start where you are</h2>
+    <div class="tier">
+      <div class="card">
+        <h3>Free — the proof</h3>
+        <p>The board's tier row, the BTC exit-cost desk, the depth map, and
+        the desk's public sealed-calls record. Enough to prove it's real —
+        the record is young and says so, which is the point.</p>
+        <p><strong>$0</strong> · <a href="https://t.me/undertow_LiquiLens_bot">open the bot</a> · <a href="/undertow/app/">open the web desk</a> · /trial for 7 days full, no card</p>
+      </div>
+      <div class="card">
+        <h3>⭐ Retail — the desk</h3>
+        <p>Everything in free, plus the ETH desk, the venue-failure
+        scenario S(−1), instant alerts when YOUR exit narrows, every
+        measure with its note, and seal-your-own-calls — a hash-chained,
+        post-quantum-signed track record nobody (including us) can
+        backdate or delete.</p>
+        <p><strong>≈$29/mo</strong> in Telegram Stars (2,222⭐ — buy on
+        desktop/web; app stores mark Stars up ~30%) · cancel anytime ·
+        /subscribe in the bot</p>
+      </div>
+      <div class="card">
+        <h3>Small desk — 1–10 people</h3>
+        <p>Everything in retail, every asset at full fidelity, scenario
+        detail behind every number, and the attested data feed for your
+        systems — the same point-in-time, offline-verifiable record,
+        droppable into your own compliance trail.</p>
+        <p><strong>$149–299/mo</strong> · card or crypto · /desk in the bot</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap offer">
+    <h2>For funds — founding subscription, ten seats</h2>
+    <p class="price">$8,000<span style="font-size:18px;color:var(--faint)">/yr</span></p>
+    <p><span class="strike">$20,000+ list</span> &nbsp;·&nbsp; price locked 36 months</p>
+    <ul class="plain" style="display:inline-block;text-align:left;margin-top:18px">
+      <li>Full board + every measure &amp; note, Telegram + API</li>
+      <li>Daily desk digest, team seats on request</li>
+      <li>Direct line to the builder</li>
+      <li>Annual · cancel anytime · invoice or USDC</li>
     </ul>
+    <br>
+    <a class="btn" href="https://t.me/undertow_LiquiLens_bot">Open the Telegram desk →</a>
+    <p class="tiny">Self-serve 7-day full trial inside — no card, type /trial.</p>
   </div>
 </section>
 
-<section class="band" id="access">
-  <div class="wrap rv">
-    <span class="kicker">for funds and risk desks</span>
-    <h2>Early access</h2>
-    <p class="lede">Undertow is being built in the open record and sold as a subscription: the board, the backbone map, named concentration alerts, and a weekly liquidity letter. Mid size funds, multi strategy risk teams, ETF heavy managers and crypto funds are the first desks it serves. If the question you keep asking is whether you can exit at size, this is your instrument.</p>
-    <p class="lede" style="margin-top:14px"><b>Founding subscription — ten seats:</b> $8,000/yr against a $20,000+ list price, locked for 36 months. Full board with every measure and note (Telegram + API), the daily desk digest, and a direct line to the builder. Annual — invoice or USDC. The discount is explicitly the price of the record's youth; the instruments work now, and the record accrues under your audit.</p>
-    <a class="cta" href="mailto:mrinal@liquilens.in?subject=Undertow%20founding%20seat">Claim a founding seat</a>
-    <p class="stamp" style="margin-top:16px">from the lab behind LiquiLens, the failure radar for banks and lenders, and Seiche, the open funding terminal</p>
-  </div>
-</section>
-
-<section class="band" id="machines">
-  <div class="wrap rv">
-    <span class="kicker">for machines · the attested feed</span>
-    <h2>Agents buy the same record per call</h2>
-    <p class="lede">No signup: a free summary, then machine payable routes in USDC on Base via the x402 protocol. Every paid response carries the point in time chain head and the post quantum publisher root — an answer your systems can verify offline, not just trust.</p>
-    <div class="cardrow">
+<section>
+  <div class="wrap">
+    <h2>For machines — the attested feed</h2>
+    <p style="color:var(--faint);max-width:44em">AI agents buy the same
+    record per call, no signup: a free tier-row summary, then
+    machine-payable routes in USDC on Base via the x402 protocol. Every
+    paid response carries the point-in-time chain head and the
+    post-quantum publisher root — an answer your systems can verify
+    offline, not just trust.</p>
+    <div class="cards" style="margin-top:22px">
       <div class="card">
-        <div class="lab"><b>Free taste.</b><br/><span style="font-family:var(--mono);font-size:12.5px">api.seiche.info/undertow/x402/summary</span><br/>The board's tier row (PARTIAL means still accruing, never rendered as calm), feed health, and the machine manifest. A few free calls per IP per day.</div>
+        <h3>Free taste</h3>
+        <p class="mono">api.seiche.info/undertow/x402/summary</p>
+        <p>The board's tier row (DEFICIENT / STRAINED / NORMAL / SURPLUS;
+        PARTIAL = still accruing, never rendered as calm), plus feed
+        health and the machine manifest. A few free calls per IP per day.</p>
       </div>
       <div class="card">
-        <div class="lab"><b>Paid per call.</b><br/><span style="font-family:var(--mono);font-size:12.5px">/feed · /board · /pack/…</span><br/>The full board with every measure and note, the per venue exit cost desk, and the sealed calls record. From $0.05/call; an unpaid call gets HTTP 402 with the payment offer. USDC on Base, settled via CDP facilitator.</div>
+        <h3>Paid per call</h3>
+        <p class="mono">api.seiche.info/undertow/x402/feed · /board · /pack/…</p>
+        <p>The full board with every measure and note, the crypto
+        per-venue exit-cost desk, and the sealed-calls record. List prices
+        from $0.05/call; an unpaid call gets HTTP 402 with the payment
+        offer. USDC on Base, settled via CDP facilitator.</p>
       </div>
       <div class="card">
-        <div class="lab"><b>Verify, don't trust.</b><br/><span style="font-family:var(--mono);font-size:12.5px">python3 scripts/verify_record.py</span><br/>One stdlib command over the public repo checks the hash chain, the call ids, and the Lamport Merkle signatures — misses included. MCP server for agents: <span style="font-family:var(--mono);font-size:12.5px">python3 -m undertow_mm.mcp_server</span>.</div>
+        <h3>Verify, don't trust</h3>
+        <p class="mono">python3 scripts/verify_record.py</p>
+        <p>One stdlib command over the public repo checks the hash chain,
+        the call ids and the Lamport-Merkle signatures — misses included.
+        MCP server for agents: <span class="mono">python3 -m
+        undertow_mm.mcp_server</span> (docs/MCP.md).</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Fair questions</h2>
+    <dl>
+      <dt>You have no track record.</dt>
+      <dd>Correct — and unfixable by waiting, since vendors backfill records.
+      Ours is hash-chained from day one; the founding discount is explicitly
+      the price of that youth. The instruments work now; the record accrues
+      under your audit.</dd>
+      <dt>Why not Bloomberg LQA or MSCI?</dt>
+      <dd>They price today's transaction cost, black-box, at $30k+ a seat. We
+      watch forward fragility with methodology your quants can replicate, at
+      a fraction. Run both — ours is the one you can argue with.</dd>
+      <dt>Free data can't be good.</dt>
+      <dd>The Fed, CFETS, FRED, Copernicus and NASA are the primary record,
+      not a hobby feed. What you pay for is the fusion discipline:
+      point-in-time storage, quarantine rules, replayable event studies.</dd>
+      <dt>We'd build this in-house.</dt>
+      <dd>You could — the papers are cited and the methods documented. Budget
+      a quant-year to replicate, then the upkeep. Or $8k and a direct line to
+      the person who already did.</dd>
+    </dl>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    LiquiLens Undertow · liquilens.in/undertow · public data in, attested record out · <a href="/">back to the failure radar</a>
-    <div style="margin-top:8px">Machines: <a href="/llms.txt">llms.txt</a> · <a href="https://api.seiche.info/undertow/x402/">attested feed (x402)</a> · <a href="https://github.com/beepboop2025/liquilens-undertow">repo &amp; verifier</a></div>
-    <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India.</div>
+    <p>UNDERTOW is research and market data, <strong>not investment
+    advice</strong>. Readings are scored against their own published history;
+    absence of data is disclosed, never rendered as calm. The free
+    money-market plumbing terminal, Seiche, remains open source.
+    © 2026 LiquiLens.</p>
+    <p style="margin-top:12px">Machines: <a href="/llms.txt">llms.txt</a> ·
+    <a href="https://api.seiche.info/undertow/x402/">attested feed (x402)</a> ·
+    <a href="https://github.com/beepboop2025/liquilens-undertow">repo &amp; verifier</a></p>
   </div>
 </footer>
 
-<script>
-(function(){
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- the current: streaming order book ---------- */
-  var cv = document.getElementById('bookCanvas');
-  var ev = document.getElementById('evLabel');
-  var ctx = cv.getContext('2d');
-  var W, H, mid, cols = [], colW = 5, speed = 2.2;
-  var t = 0, withdraw = 0, nextEv = 260;
-
-  function size(){
-    W = cv.clientWidth; H = 230;
-    var dpr = Math.min(devicePixelRatio || 1, 2);
-    cv.width = W * dpr; cv.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    mid = H / 2;
-  }
-  size(); addEventListener('resize', size);
-
-  var bid = .55, ask = .5;
-  function nextCol(){
-    bid = Math.max(.06, Math.min(1, bid + (Math.random() - .5) * .12));
-    ask = Math.max(.06, Math.min(1, ask + (Math.random() - .5) * .12));
-    var squeeze = 1;
-    if (withdraw > 0){
-      var ph = withdraw > 40 ? (80 - withdraw) / 40 : withdraw / 40; /* down then up */
-      squeeze = 1 - .85 * (1 - ph);
-      withdraw--;
-      if (withdraw === 0){ ev.classList.remove('on'); nextEv = 220 + Math.random() * 320; }
-    } else if (--nextEv <= 0){
-      withdraw = 80; ev.classList.add('on');
-    }
-    cols.push({b: bid * squeeze, a: ask * squeeze, hot: withdraw > 0});
-    if (cols.length > Math.ceil(W / colW) + 4) cols.shift();
-  }
-
-  function draw(){
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(40,51,84,.55)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0, mid + .5); ctx.lineTo(W, mid + .5); ctx.stroke();
-    var x = W - cols.length * colW;
-    for (var i = 0; i < cols.length; i++){
-      var c = cols[i], bx = x + i * colW;
-      var ah = c.a * (mid - 18), bh = c.b * (mid - 18);
-      ctx.fillStyle = c.hot ? 'rgba(224,112,112,.55)' : 'rgba(127,168,220,.78)';
-      ctx.fillRect(bx, mid - ah, colW - 1.4, ah);
-      ctx.fillStyle = c.hot ? 'rgba(224,112,112,.4)' : 'rgba(91,208,196,.72)';
-      ctx.fillRect(bx, mid + 1, colW - 1.4, bh);
-    }
-  }
-
-  if (reduced){
-    for (var i = 0; i < 400; i++) nextCol();
-    draw();
-  } else {
-    var acc = 0;
-    (function loop(){
-      if (!document.hidden){
-        acc += speed;
-        while (acc >= colW){ nextCol(); acc -= colW; }
-        draw();
-      }
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  /* ---------- board bars on reveal ---------- */
-  var rows = [].slice.call(document.querySelectorAll('.brd-row'));
-  var brdIO = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if (!e.isIntersecting) return;
-      var r = e.target, bar = r.querySelector('.brd-bar i'), tick = r.querySelector('.brd-bar em');
-      var v = +r.dataset.bar || 0, tv = +r.dataset.tick || 0;
-      if (bar) requestAnimationFrame(function(){ bar.style.width = v + '%'; });
-      if (tick && tv){ tick.style.left = 'calc(' + tv + '% - 1px)'; r.classList.add('lit'); }
-      brdIO.unobserve(r);
-    });
-  }, {threshold:.4});
-  rows.forEach(function(r){ brdIO.observe(r); });
-
-  /* ---------- flow bar ---------- */
-  var shares = [
-    ['Bank of America', 30.6, '#5BD0C4'],
-    ['Goldman Sachs', 13.1, '#54b9c9'],
-    ['JPMorgan', 9.8, '#63a8d6'],
-    ['ABN AMRO', 8.8, '#7FA8DC'],
-    ['Morgan Stanley', 6.5, '#8f9fd4'],
-    ['Barclays', 4.7, '#9a93c9'],
-    ['Jane Street', 4.2, '#E3B778'],
-    ['all others', 22.3, '#3a4664']
-  ];
-  var fb = document.getElementById('flowBar');
-  shares.forEach(function(s){
-    var d = document.createElement('div');
-    d.className = 'flow-seg';
-    d.style.width = s[1] + '%';
-    d.style.background = s[2];
-    d.title = s[0] + ' · ' + s[1] + '% of mapped flow';
-    if (s[1] >= 8) d.textContent = s[0] + ' ' + s[1] + '%';
-    else if (s[1] >= 4) d.textContent = s[1] + '%';
-    fb.appendChild(d);
-  });
-
-  /* ---------- counters ---------- */
-  var counters = [].slice.call(document.querySelectorAll('[data-count]'));
-  var cIO = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if (!e.isIntersecting) return;
-      var el = e.target, target = +el.dataset.count, suf = el.dataset.suffix || '';
-      cIO.unobserve(el);
-      if (reduced){ el.textContent = target + suf; return; }
-      var t0 = null;
-      (function step(ts){
-        if (!t0) t0 = ts;
-        var p = Math.min((ts - t0) / 1300, 1), eased = 1 - Math.pow(1 - p, 3);
-        var val = target * eased;
-        el.textContent = (target % 1 ? val.toFixed(1) : Math.round(val)) + suf;
-        if (p < 1) requestAnimationFrame(step);
-      })(performance.now());
-    });
-  }, {threshold:.5});
-  counters.forEach(function(c){ cIO.observe(c); });
-
-  /* ---------- section reveals ---------- */
-  var rvs = [].slice.call(document.querySelectorAll('.rv'));
-  var rIO = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); rIO.unobserve(e.target); } });
-  }, {threshold:.15});
-  rvs.forEach(function(el){ rIO.observe(el); });
-})();
-</script>
-
-<script>
-/* ---------- the retail desk: live from the published packs ----------------
-   Fetches the same hash chained packs the Telegram desk serves
-   (api.seiche.info/undertow/*, a CORS static mirror refreshed every 15
-   minutes). This section computes nothing: it renders the pack verbatim,
-   and when the pack cannot answer it says so. */
-(function(){
-  var PACKS = 'https://api.seiche.info/undertow';
-  var QLAB = {1000:'$1k',10000:'$10k',100000:'$100k',1000000:'$1M'};
-  var desk = null, asset = 'BTC', sizeIdx = 1;
-
-  var $ = function(id){ return document.getElementById(id); };
-  var asofEl = $('rtAsof'), venuesEl = $('rtVenues'), bestEl = $('rtBest'),
-      refusalEl = $('rtRefusal'), sizeEl = $('rtSize'), assetEl = $('rtAsset'),
-      statsEl = $('rtStats'), tiersEl = $('rtTiers'), callsEl = $('rtCalls');
-
-  function esc(s){ var d = document.createElement('span'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
-
-  function get(name){
-    return fetch(PACKS + '/' + name + '.json').then(function(r){
-      return r.ok ? r.json() : null;
-    }).catch(function(){ return null; });
-  }
-
-  function render(){
-    var block = (desk && desk.assets && desk.assets[asset]) || {};
-    var table = block.exit_table || [];
-    var row = table[sizeIdx] || table[0];
-
-    sizeEl.innerHTML = table.map(function(r, i){
-      return '<button data-i="' + i + '"' + (i === sizeIdx ? ' class="on"' : '') + '>'
-        + esc(QLAB[r.q_usd] || ('$' + r.q_usd)) + '</button>';
-    }).join('');
-
-    venuesEl.innerHTML = '';
-    refusalEl.hidden = true;
-    bestEl.innerHTML = '';
-    if (!row){ return; }
-
-    var by = row.sell_bp_by_venue || {};
-    var entries = Object.keys(by).filter(function(v){ return by[v] != null; })
-      .map(function(v){ return [v, by[v]]; })
-      .sort(function(a, b){ return a[1] - b[1]; });
-
-    if (!entries.length){
-      refusalEl.hidden = false;
-      refusalEl.textContent = (row.unable_at_observed_depth && row.unable_at_observed_depth.length)
-        ? 'No single venue can absorb ' + (QLAB[row.q_usd] || 'this size')
-          + ' within its observed book. We refuse to extrapolate. That refusal is the reading.'
-        : 'No per venue costs published at this size.';
-    } else {
-      var maxBp = entries[entries.length - 1][1] || 1;
-      entries.forEach(function(e, i){
-        var cls = i === 0 ? ' best' : (i === entries.length - 1 && entries.length > 1 ? ' worst' : '');
-        var w = Math.max(3, Math.pow(e[1] / maxBp, 0.45) * 100);
-        var d = document.createElement('div');
-        d.className = 'rt-venue' + cls;
-        d.innerHTML = '<span class="nm">' + esc(e[0]) + '</span>'
-          + '<span class="track"><i data-w="' + w.toFixed(1) + '"></i></span>'
-          + '<span class="bp">' + esc(e[1]) + 'bp</span>';
-        venuesEl.appendChild(d);
-      });
-      requestAnimationFrame(function(){
-        [].forEach.call(venuesEl.querySelectorAll('.track i'), function(bar){
-          bar.style.width = bar.dataset.w + '%';
-        });
-      });
-      var best = row.best_venue, worst = row.worst_venue;
-      if (best){
-        bestEl.innerHTML = 'Cheapest door at ' + esc(QLAB[row.q_usd] || 'this size') + ': <b>'
-          + esc(best.venue) + '</b> at ' + esc(best.sell_bp) + 'bp'
-          + (worst && worst.venue !== best.venue
-            ? ' · dearest ' + esc(worst.venue) + ' at ' + esc(worst.sell_bp) + 'bp' : '')
-          + (row.unable_at_observed_depth && row.unable_at_observed_depth.length
-            ? ' · cannot absorb it: ' + esc(row.unable_at_observed_depth.join(', ')) : '');
-      }
-    }
-
-    var conc = block.venue_concentration || {};
-    var state = block.regime && block.regime.current_state && block.regime.current_state.state;
-    var peg = desk && desk.usdt_usd;
-    statsEl.innerHTML =
-      '<div class="rt-stat"><div class="big">' + (conc.n_eff_venues != null ? esc(conc.n_eff_venues) : '·')
-        + '</div><div class="lab">effective doors open, from ±1% depth concentration</div></div>'
-      + '<div class="rt-stat"><div class="big' + (state ? '' : ' warm') + '">' + esc(state || 'withheld')
-        + '</div><div class="lab">' + (state ? 'liquidity state, research label' : 'liquidity state: history still accruing, said instead of faked') + '</div></div>'
-      + (peg && peg.price != null
-        ? '<div class="rt-stat"><div class="big' + (peg.depeg_flag ? ' warm' : '') + '">' + esc(peg.price.toFixed(4))
-          + '</div><div class="lab">USDT / USD' + (peg.depeg_flag ? ' · depeg flag: USD and USDT venues are not comparable right now' : ' · peg holding') + '</div></div>'
-        : '');
-  }
-
-  assetEl.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    asset = b.dataset.a;
-    [].forEach.call(assetEl.querySelectorAll('button'), function(x){ x.classList.toggle('on', x === b); });
-    render();
-  });
-  sizeEl.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    sizeIdx = +b.dataset.i;
-    render();
-  });
-
-  get('crypto_desk').then(function(d){
-    desk = d;
-    if (!d){
-      asofEl.textContent = 'pack unreachable · the live desk is in the bot';
-      refusalEl.hidden = false;
-      refusalEl.textContent = 'The pack mirror did not answer. Absence is not calm: the live numbers are in the Telegram bot, /crypto.';
-      return;
-    }
-    asofEl.textContent = 'asof ' + (d.asof || '?') + ' · published pack, read verbatim';
-    render();
-  });
-
-  get('board').then(function(b){
-    if (!b || !b.segments) return;
-    var segs = Array.isArray(b.segments)
-      ? b.segments.map(function(s){ return [s.segment || '?', s]; })
-      : Object.keys(b.segments).map(function(k){ return [k, b.segments[k]]; });
-    var cls = {NORMAL:'t-normal', SURPLUS:'t-normal', PARTIAL:'t-partial',
-               UNAVAILABLE:'t-unavail', STRAINED:'t-strain', DEFICIENT:'t-strain'};
-    tiersEl.innerHTML = segs.map(function(p){
-      var tier = (p[1] && p[1].tier) || '?';
-      return '<span class="tier ' + (cls[tier] || 't-partial') + '" title="'
-        + esc(p[0]) + '">' + esc(p[0]) + ' · ' + esc(tier) + '</span>';
-    }).join('') + (b.funding && b.funding.regime
-      ? '<span class="tier t-strain">funding · ' + esc(b.funding.regime) + '</span>' : '');
-  });
-
-  get('sealed_calls').then(function(c){
-    if (!c || !c.record || !c.record.authors || !c.record.authors.length) return;
-    var a = c.record.authors[0];
-    callsEl.innerHTML = '<b>The sealed record:</b> ' + esc(a.sealed || 0)
-      + ' calls sealed before their outcomes were known · ' + esc(a.hit || 0) + ' hit · '
-      + esc(a.miss || 0) + ' miss · ' + esc(a.pending || 0) + ' pending'
-      + (c.ledger_root ? ' · root ' + esc(String(c.ledger_root).slice(0, 14)) + '… anchored on TON' : '')
-      + ' · losers cannot be deleted. /calls in the bot for the full ledger.';
-  });
-})();
-</script>
 </body>
 </html>
